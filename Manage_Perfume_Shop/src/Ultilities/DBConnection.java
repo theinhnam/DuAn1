@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Ultility;
+package Ultilities;
 
 /**
  *
@@ -12,7 +12,7 @@ import java.sql.*;
 public class DBConnection {
     public static final String HOSTNAME = "localhost";
     public static final String PORT = "1433";
-    public static final String DBNAME = "FINALASS_FPOLYSHOP_FA22_SOF205__SOF2041";
+    public static final String DBNAME = "DuAn1";
     public static final String USERNAME = "sa";
     public static final String PASSWORD = "123456";
 
