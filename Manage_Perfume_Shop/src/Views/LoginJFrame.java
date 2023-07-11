@@ -4,6 +4,11 @@
  */
 package Views;
 
+import Services.LoginService;
+import Services.LoginServiceImpl;
+import ViewModels.TaiKhoanViews;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -11,9 +16,7 @@ package Views;
  */
 public class LoginJFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginJFrame
-     */
+    LoginService loginService = new LoginServiceImpl();
     public LoginJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -87,7 +90,19 @@ public class LoginJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        // TODO add your handling code here:
+        TaiKhoanViews taiKhoan = new TaiKhoanViews(txtTenDangNhap1.getText(), txtMatKhau.getPassword().toString());//Lỗi ở char mật khẩu
+        String tenLoaiNguoiDung = loginService.checkLogin(taiKhoan);
+        if (tenLoaiNguoiDung == null) {
+            JOptionPane.showMessageDialog(this, "Đăng nhập thất bại, vui lòng kiểm tra lại tài khoản hoặc mật khẩu");
+            return;
+        }else{
+            if (tenLoaiNguoiDung.equalsIgnoreCase("Quản Lý")) {
+                JOptionPane.showMessageDialog(this, "Đây là view của quản lý");
+            }else{
+                JOptionPane.showMessageDialog(this, "Đây là view của nhân viên");
+            }
+        }
+        
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed

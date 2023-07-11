@@ -15,10 +15,8 @@ public class QuanLy_SanPhamJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public QuanLy_SanPhamJFrame() {
-        initComponents();
-        
+        initComponents();   
         init();
-        
     }
 
     /**

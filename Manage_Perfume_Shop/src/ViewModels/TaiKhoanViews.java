@@ -2,17 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DomainModels;
+package ViewModels;
 
 /**
  *
  * @author theinhnam
  */
-public class TaiKhoan {
+public class TaiKhoanViews {
 
     private int idTaiKhoan;
-
-    private int idLoaiNguoiDung;
 
     private String email;
 
@@ -20,19 +18,20 @@ public class TaiKhoan {
 
     private String hoTen;
 
-    public TaiKhoan() {
+    private String tenLoaiNguoiDung;
+
+    public TaiKhoanViews() {
     }
 
-    public TaiKhoan(int idTaiKhoan, int idLoaiNguoiDung, String email, String matKhau, String hoTen) {
+    public TaiKhoanViews(int idTaiKhoan, String email, String matKhau, String hoTen, String tenLoaiNguoiDung) {
         this.idTaiKhoan = idTaiKhoan;
-        this.idLoaiNguoiDung = idLoaiNguoiDung;
         this.email = email;
         this.matKhau = matKhau;
         this.hoTen = hoTen;
+        this.tenLoaiNguoiDung = tenLoaiNguoiDung;
     }
 
-    public TaiKhoan(int idLoaiNguoiDung, String email, String matKhau) {
-        this.idLoaiNguoiDung = idLoaiNguoiDung;
+    public TaiKhoanViews(String email, String matKhau) {
         this.email = email;
         this.matKhau = matKhau;
     }
@@ -45,12 +44,12 @@ public class TaiKhoan {
         this.idTaiKhoan = idTaiKhoan;
     }
 
-    public int getIdLoaiNguoiDung() {
-        return idLoaiNguoiDung;
+    public String getTenLoaiNguoiDung() {
+        return tenLoaiNguoiDung;
     }
 
-    public void setIdLoaiNguoiDung(int idLoaiNguoiDung) {
-        this.idLoaiNguoiDung = idLoaiNguoiDung;
+    public void setTenLoaiNguoiDung(String tenLoaiNguoiDung) {
+        this.tenLoaiNguoiDung = tenLoaiNguoiDung;
     }
 
     public String getEmail() {

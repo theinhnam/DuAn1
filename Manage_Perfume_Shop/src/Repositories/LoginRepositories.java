@@ -16,18 +16,42 @@ import java.sql.PreparedStatement;
  * @author theinhnam
  */
 public class LoginRepositories {
-    public boolean checkLogin(){
-        String sql = "SELECT * FROM TaiKhoan WHERE TaiKhoan = ? and MatKhau = ? and ";
+
+    public ArrayList<TaiKhoan> checkLogin(TaiKhoan o) {
+        String sql = "SELECT * FROM TaiKhoan WHERE Email = ? and MatKhau = ?";
         ArrayList<TaiKhoan> listAccount = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, o.getEmail());
+            ps.setObject(2, o.getMatKhau());
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
-                TaiKhoan taiKhoan = new TaiKhoan(rs.getInt("IDTaiKhoan"), rs.getInt("IDLoaiNguoiDung"), rs.getString("Email"), rs.getString("MatKhau"), rs.getString("HoTen"));
-                listAccount.add(taiKhoan);
+            if (rs.next() == false) {
+                return null;
+            } else {
+                while (rs.next()) {
+                    TaiKhoan taiKhoan = new TaiKhoan(rs.getInt("IDLoaiNguoiDung"), rs.getString("Email"), rs.getString("MatKhau"));
+                    listAccount.add(taiKhoan);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listAccount;
+    }
+    
+    public String getLoaiNguoiDung(int idLoaiNguoiDung){
+        String sql = "SELECT Ten FROM LoaiNguoiDung WHERE IDLoaiNguoiDung = ?";
+        String tenLoaiNguoiDung = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, idLoaiNguoiDung);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() == false) {
+                return null;
+            }else{
+                tenLoaiNguoiDung = rs.getString("Ten");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tenLoaiNguoiDung;
     }
 }
