@@ -16,8 +16,8 @@ import java.sql.PreparedStatement;
  * @author theinhnam
  */
 public class LoginRepositories {
-    public ArrayList<TaiKhoan> findAll(){
-        String sql = "SELECT * FROM TaiKhoan";
+    public boolean checkLogin(){
+        String sql = "SELECT * FROM TaiKhoan WHERE TaiKhoan = ? and MatKhau = ? and ";
         ArrayList<TaiKhoan> listAccount = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
