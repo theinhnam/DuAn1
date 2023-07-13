@@ -24,34 +24,13 @@ public class LoginRepositories {
             ps.setObject(1, o.getEmail());
             ps.setObject(2, o.getMatKhau());
             ResultSet rs = ps.executeQuery();
-            if (rs.next() == false) {
-                return null;
-            } else {
-                while (rs.next()) {
-                    TaiKhoan taiKhoan = new TaiKhoan(rs.getInt("IDLoaiNguoiDung"), rs.getString("Email"), rs.getString("MatKhau"));
-                    listAccount.add(taiKhoan);
-                }
+            while (rs.next()) {                
+                TaiKhoan taiKhoan = new TaiKhoan(rs.getString("IDLoaiNguoiDung"), rs.getString("HoTen"));
+                listAccount.add(taiKhoan);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listAccount;
-    }
-    
-    public String getLoaiNguoiDung(int idLoaiNguoiDung){
-        String sql = "SELECT Ten FROM LoaiNguoiDung WHERE IDLoaiNguoiDung = ?";
-        String tenLoaiNguoiDung = "";
-        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setObject(1, idLoaiNguoiDung);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next() == false) {
-                return null;
-            }else{
-                tenLoaiNguoiDung = rs.getString("Ten");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return tenLoaiNguoiDung;
     }
 }

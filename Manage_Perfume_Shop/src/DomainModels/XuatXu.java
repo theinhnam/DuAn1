@@ -4,38 +4,79 @@
  */
 package DomainModels;
 
+import java.util.Date;
+
 /**
  *
  * @author theinhnam
  */
 public class XuatXu {
 
-    private int idXuatXu;
-
-    private String tenXuatXu;
+    private String idXuatXu;
+    private String ten;
+    private Date ngayThem;
+    private Date ngaySua;
+    private int trangThai;
 
     public XuatXu() {
     }
 
-    public XuatXu(int idXuatXu, String tenXuatXu) {
+    public XuatXu(String idXuatXu, String ten, Date ngayThem, Date ngaySua, int trangThai) {
         this.idXuatXu = idXuatXu;
-        this.tenXuatXu = tenXuatXu;
+        this.ten = ten;
+        this.ngayThem = ngayThem;
+        this.ngaySua = ngaySua;
+        this.trangThai = trangThai;
+    }
+    
+    public XuatXu(String idXuatXu, String ten, int trangThai) {
+        this.idXuatXu = idXuatXu;
+        this.ten = ten;
+        this.trangThai = trangThai;
     }
 
-    public int getIdXuatXu() {
+    public String getIdXuatXu() {
         return idXuatXu;
     }
 
-    public void setIdXuatXu(int idXuatXu) {
+    public void setIdXuatXu(String idXuatXu) {
         this.idXuatXu = idXuatXu;
     }
 
-    public String getTenXuatXu() {
-        return tenXuatXu;
+    public String getTen() {
+        return ten;
     }
 
-    public void setTenXuatXu(String tenXuatXu) {
-        this.tenXuatXu = tenXuatXu;
+    public void setTen(String ten) {
+        this.ten = ten;
     }
+
+    public Date getNgayThem() {
+        return ngayThem;
+    }
+
+    public void setNgayThem(Date ngayThem) {
+        this.ngayThem = ngayThem;
+    }
+
+    public Date getNgaySua() {
+        return ngaySua;
+    }
+
+    public void setNgaySua(Date ngaySua) {
+        this.ngaySua = ngaySua;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    
+    
+    
 
 }

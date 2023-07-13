@@ -83,7 +83,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JToggleButton" name="jToggleButton2">
+    <Component class="javax.swing.JToggleButton" name="btnDangNhap">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="33" type="rgb"/>
@@ -97,7 +97,7 @@
         <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng nh&#x1ead;p"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangNhapActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -105,7 +105,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JToggleButton" name="jToggleButton1">
+    <Component class="javax.swing.JToggleButton" name="btnDangKy">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="ff" type="rgb"/>
@@ -119,7 +119,7 @@
         <Property name="text" type="java.lang.String" value="Tho&#xe1;t"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDangKyActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

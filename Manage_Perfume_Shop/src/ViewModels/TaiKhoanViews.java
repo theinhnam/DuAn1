@@ -10,7 +10,7 @@ package ViewModels;
  */
 public class TaiKhoanViews {
 
-    private int idTaiKhoan;
+    private String idTaiKhoan;
 
     private String email;
 
@@ -18,38 +18,38 @@ public class TaiKhoanViews {
 
     private String hoTen;
 
-    private String tenLoaiNguoiDung;
+    private String idLoaiNguoiDung;
 
     public TaiKhoanViews() {
     }
 
-    public TaiKhoanViews(int idTaiKhoan, String email, String matKhau, String hoTen, String tenLoaiNguoiDung) {
+    public TaiKhoanViews(String idTaiKhoan, String email, String matKhau, String hoTen, String idLoaiNguoiDung) {
         this.idTaiKhoan = idTaiKhoan;
         this.email = email;
         this.matKhau = matKhau;
         this.hoTen = hoTen;
-        this.tenLoaiNguoiDung = tenLoaiNguoiDung;
+        this.idLoaiNguoiDung = idLoaiNguoiDung;
     }
 
-    public TaiKhoanViews(String email, String matKhau) {
-        this.email = email;
-        this.matKhau = matKhau;
+    public TaiKhoanViews(String hoTen, String idLoaiNguoiDung) {
+        this.hoTen = hoTen;
+        this.idLoaiNguoiDung = idLoaiNguoiDung;
     }
 
-    public int getIdTaiKhoan() {
+    public String getIdTaiKhoan() {
         return idTaiKhoan;
     }
 
-    public void setIdTaiKhoan(int idTaiKhoan) {
+    public void setIdTaiKhoan(String idTaiKhoan) {
         this.idTaiKhoan = idTaiKhoan;
     }
 
-    public String getTenLoaiNguoiDung() {
-        return tenLoaiNguoiDung;
+    public String getIDLoaiNguoiDung() {
+        return idLoaiNguoiDung;
     }
 
-    public void setTenLoaiNguoiDung(String tenLoaiNguoiDung) {
-        this.tenLoaiNguoiDung = tenLoaiNguoiDung;
+    public void setIDLoaiNguoiDung(String tenLoaiNguoiDung) {
+        this.idLoaiNguoiDung = tenLoaiNguoiDung;
     }
 
     public String getEmail() {

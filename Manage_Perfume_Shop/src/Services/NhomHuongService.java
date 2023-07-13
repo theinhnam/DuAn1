@@ -4,13 +4,16 @@
  */
 package Services;
 
-import ViewModels.TaiKhoanViews;
+import DomainModels.NhomHuong;
 import java.util.ArrayList;
 
 /**
  *
- * @author theinhnam
+ * @author DELL
  */
-public interface LoginService {
-    ArrayList<TaiKhoanViews> checkLogin(TaiKhoanViews o);
+public interface NhomHuongService {
+    public ArrayList<NhomHuong> getList();
+    public String insert(NhomHuong nh);
+    public String update(NhomHuong nh);
+    public String delete(String id);
 }

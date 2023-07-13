@@ -11,38 +11,45 @@ import java.math.BigDecimal;
  * @author theinhnam
  */
 public class SanPham {
-    private int idSanPham;
-    
+
+    private String idSanPham;
+
     private String tenSanPham;
-    
-    private int idDanhMuc;
-    
-    private int idNhomHuong;
-    
+
+    private String idDanhMuc;
+
+    private String idNhomHuong;
+
     private int kichThuoc;
-    
-    private int idNhanHieu;
-    
-    private int idXuatxu;
-    
+
+    private String idNhanHieu;
+
+    private String idXuatxu;
+
     private String moTa;
-    
+
     private BigDecimal giaGoc;
-    
+
     private BigDecimal giaGiam;
-    
+
     private int soLuongTon;
-    
+
     private int tinhTrang;
-    
-    private int idKhuyenMai;
-    
+
+    private String idKhuyenMai;
+
     private int chietKhau;
+
+    private String ngayThem;
+
+    private String ngaySua;
+
+    private String imageUrl;
 
     public SanPham() {
     }
 
-    public SanPham(int idSanPham, String tenSanPham, int idDanhMuc, int idNhomHuong, int kichThuoc, int idNhanHieu, int idXuatxu, String moTa, BigDecimal giaGoc, BigDecimal giaGiam, int soLuongTon, int tinhTrang, int idKhuyenMai, int chietKhau) {
+    public SanPham(String idSanPham, String tenSanPham, String idDanhMuc, String idNhomHuong, int kichThuoc, String idNhanHieu, String idXuatxu, String moTa, BigDecimal giaGoc, BigDecimal giaGiam, int soLuongTon, int tinhTrang, String idKhuyenMai, int chietKhau, String ngayThem, String ngaySua, String imageUrl) {
         this.idSanPham = idSanPham;
         this.tenSanPham = tenSanPham;
         this.idDanhMuc = idDanhMuc;
@@ -57,13 +64,16 @@ public class SanPham {
         this.tinhTrang = tinhTrang;
         this.idKhuyenMai = idKhuyenMai;
         this.chietKhau = chietKhau;
+        this.ngayThem = ngayThem;
+        this.ngaySua = ngaySua;
+        this.imageUrl = imageUrl;
     }
-    
-    public int getIdSanPham() {
+
+    public String getIdSanPham() {
         return idSanPham;
     }
 
-    public void setIdSanPham(int idSanPham) {
+    public void setIdSanPham(String idSanPham) {
         this.idSanPham = idSanPham;
     }
 
@@ -75,19 +85,19 @@ public class SanPham {
         this.tenSanPham = tenSanPham;
     }
 
-    public int getIdDanhMuc() {
+    public String getIdDanhMuc() {
         return idDanhMuc;
     }
 
-    public void setIdDanhMuc(int idDanhMuc) {
+    public void setIdDanhMuc(String idDanhMuc) {
         this.idDanhMuc = idDanhMuc;
     }
 
-    public int getIdNhomHuong() {
+    public String getIdNhomHuong() {
         return idNhomHuong;
     }
 
-    public void setIdNhomHuong(int idNhomHuong) {
+    public void setIdNhomHuong(String idNhomHuong) {
         this.idNhomHuong = idNhomHuong;
     }
 
@@ -99,19 +109,19 @@ public class SanPham {
         this.kichThuoc = kichThuoc;
     }
 
-    public int getIdNhanHieu() {
+    public String getIdNhanHieu() {
         return idNhanHieu;
     }
 
-    public void setIdNhanHieu(int idNhanHieu) {
+    public void setIdNhanHieu(String idNhanHieu) {
         this.idNhanHieu = idNhanHieu;
     }
 
-    public int getIdXuatxu() {
+    public String getIdXuatxu() {
         return idXuatxu;
     }
 
-    public void setIdXuatxu(int idXuatxu) {
+    public void setIdXuatxu(String idXuatxu) {
         this.idXuatxu = idXuatxu;
     }
 
@@ -155,11 +165,11 @@ public class SanPham {
         this.tinhTrang = tinhTrang;
     }
 
-    public int getIdKhuyenMai() {
+    public String getIdKhuyenMai() {
         return idKhuyenMai;
     }
 
-    public void setIdKhuyenMai(int idKhuyenMai) {
+    public void setIdKhuyenMai(String idKhuyenMai) {
         this.idKhuyenMai = idKhuyenMai;
     }
 
@@ -170,6 +180,29 @@ public class SanPham {
     public void setChietKhau(int chietKhau) {
         this.chietKhau = chietKhau;
     }
-    
-    
+
+    public String getNgayThem() {
+        return ngayThem;
+    }
+
+    public void setNgayThem(String ngayThem) {
+        this.ngayThem = ngayThem;
+    }
+
+    public String getNgaySua() {
+        return ngaySua;
+    }
+
+    public void setNgaySua(String ngaySua) {
+        this.ngaySua = ngaySua;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 }

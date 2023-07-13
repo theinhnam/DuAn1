@@ -12,9 +12,9 @@ import java.math.BigDecimal;
  */
 public class HoaDonChiTiet {
 
-    private int idHoaDon;
+    private String idHoaDon;
 
-    private int idSanPham;
+    private String idSanPham;
 
     private int soLuong;
 
@@ -23,26 +23,26 @@ public class HoaDonChiTiet {
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(int idHoaDon, int idSanPham, int soLuong, BigDecimal donGia) {
+    public HoaDonChiTiet(String idHoaDon, String idSanPham, int soLuong, BigDecimal donGia) {
         this.idHoaDon = idHoaDon;
         this.idSanPham = idSanPham;
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
 
-    public int getIdHoaDon() {
+    public String getIdHoaDon() {
         return idHoaDon;
     }
 
-    public void setIdHoaDon(int idHoaDon) {
+    public void setIdHoaDon(String idHoaDon) {
         this.idHoaDon = idHoaDon;
     }
 
-    public int getIdSanPham() {
+    public String getIdSanPham() {
         return idSanPham;
     }
 
-    public void setIdSanPham(int idSanPham) {
+    public void setIdSanPham(String idSanPham) {
         this.idSanPham = idSanPham;
     }
 

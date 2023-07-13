@@ -10,23 +10,23 @@ package DomainModels;
  */
 public class LoaiNguoiDung {
 
-    private int idLoaiNguoiDung;
+    private String idLoaiNguoiDung;
 
     private String ten;
 
     public LoaiNguoiDung() {
     }
 
-    public LoaiNguoiDung(int idLoaiNguoiDung, String ten) {
+    public LoaiNguoiDung(String idLoaiNguoiDung, String ten) {
         this.idLoaiNguoiDung = idLoaiNguoiDung;
         this.ten = ten;
     }
 
-    public int getIdLoaiNguoiDung() {
+    public String getIdLoaiNguoiDung() {
         return idLoaiNguoiDung;
     }
 
-    public void setIdLoaiNguoiDung(int idLoaiNguoiDung) {
+    public void setIdLoaiNguoiDung(String idLoaiNguoiDung) {
         this.idLoaiNguoiDung = idLoaiNguoiDung;
     }
 

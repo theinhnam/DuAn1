@@ -10,9 +10,9 @@ package DomainModels;
  */
 public class TaiKhoan {
 
-    private int idTaiKhoan;
+    private String idTaiKhoan;
 
-    private int idLoaiNguoiDung;
+    private String idLoaiNguoiDung;
 
     private String email;
 
@@ -23,7 +23,7 @@ public class TaiKhoan {
     public TaiKhoan() {
     }
 
-    public TaiKhoan(int idTaiKhoan, int idLoaiNguoiDung, String email, String matKhau, String hoTen) {
+    public TaiKhoan(String idTaiKhoan, String idLoaiNguoiDung, String email, String matKhau, String hoTen) {
         this.idTaiKhoan = idTaiKhoan;
         this.idLoaiNguoiDung = idLoaiNguoiDung;
         this.email = email;
@@ -31,25 +31,24 @@ public class TaiKhoan {
         this.hoTen = hoTen;
     }
 
-    public TaiKhoan(int idLoaiNguoiDung, String email, String matKhau) {
+    public TaiKhoan(String idLoaiNguoiDung, String hoTen) {
         this.idLoaiNguoiDung = idLoaiNguoiDung;
-        this.email = email;
-        this.matKhau = matKhau;
+        this.hoTen = hoTen;
     }
 
-    public int getIdTaiKhoan() {
+    public String getIdTaiKhoan() {
         return idTaiKhoan;
     }
 
-    public void setIdTaiKhoan(int idTaiKhoan) {
+    public void setIdTaiKhoan(String idTaiKhoan) {
         this.idTaiKhoan = idTaiKhoan;
     }
 
-    public int getIdLoaiNguoiDung() {
+    public String getIdLoaiNguoiDung() {
         return idLoaiNguoiDung;
     }
 
-    public void setIdLoaiNguoiDung(int idLoaiNguoiDung) {
+    public void setIdLoaiNguoiDung(String idLoaiNguoiDung) {
         this.idLoaiNguoiDung = idLoaiNguoiDung;
     }
 

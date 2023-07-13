@@ -18,16 +18,17 @@ public class LoginServiceImpl implements LoginService{
     LoginRepositories loginRepo = new LoginRepositories();
     
     @Override
-    public String checkLogin(TaiKhoanViews o) {
+    public ArrayList<TaiKhoanViews> checkLogin(TaiKhoanViews o) {
         TaiKhoan taiKhoan = new TaiKhoan();
         taiKhoan.setEmail(o.getEmail());
         taiKhoan.setMatKhau(o.getMatKhau());
         ArrayList<TaiKhoan> listAccount = loginRepo.checkLogin(taiKhoan);
-        if (listAccount == null) {
-            return null;
+        ArrayList<TaiKhoanViews> listAccountViews = new ArrayList<>();
+        for (TaiKhoan list : listAccount) {
+            TaiKhoanViews taiKhoanViews = new TaiKhoanViews(list.getHoTen(), list.getIdLoaiNguoiDung());
+            listAccountViews.add(taiKhoanViews);
         }
-        String tenLoaiNguoiDung = loginRepo.getLoaiNguoiDung(listAccount.get(0).getIdLoaiNguoiDung());
-        return tenLoaiNguoiDung;  
+        return listAccountViews;
     }
     
 }

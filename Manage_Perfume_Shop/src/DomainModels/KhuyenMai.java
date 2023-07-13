@@ -5,25 +5,27 @@
 package DomainModels;
 
 import java.sql.Date;
+
 /**
  *
  * @author theinhnam
  */
 public class KhuyenMai {
-    private int idKhuyenMai;
-    
+
+    private String idKhuyenMai;
+
     private String tenKhuyenMai;
-    
+
     private Date ngayBatDau;
-    
+
     private Date ngayKetThuc;
-    
+
     private int tinhTrang;
 
     public KhuyenMai() {
     }
 
-    public KhuyenMai(int idKhuyenMai, String tenKhuyenMai, Date ngayBatDau, Date ngayKetThuc, int tinhTrang) {
+    public KhuyenMai(String idKhuyenMai, String tenKhuyenMai, Date ngayBatDau, Date ngayKetThuc, int tinhTrang) {
         this.idKhuyenMai = idKhuyenMai;
         this.tenKhuyenMai = tenKhuyenMai;
         this.ngayBatDau = ngayBatDau;
@@ -31,11 +33,11 @@ public class KhuyenMai {
         this.tinhTrang = tinhTrang;
     }
 
-    public int getIdKhuyenMai() {
+    public String getIdKhuyenMai() {
         return idKhuyenMai;
     }
 
-    public void setIdKhuyenMai(int idKhuyenMai) {
+    public void setIdKhuyenMai(String idKhuyenMai) {
         this.idKhuyenMai = idKhuyenMai;
     }
 
@@ -70,6 +72,5 @@ public class KhuyenMai {
     public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
-    
-    
+
 }

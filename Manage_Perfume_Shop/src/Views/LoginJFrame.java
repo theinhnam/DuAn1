@@ -7,8 +7,8 @@ package Views;
 import Services.LoginService;
 import Services.LoginServiceImpl;
 import ViewModels.TaiKhoanViews;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class LoginJFrame extends javax.swing.JFrame {
 
     LoginService loginService = new LoginServiceImpl();
+
     public LoginJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -35,8 +36,8 @@ public class LoginJFrame extends javax.swing.JFrame {
         txtTenDangNhap1 = new javax.swing.JTextField();
         lblTendangNhap = new javax.swing.JLabel();
         lblQuenMatKhau = new javax.swing.JLabel();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        btnDangNhap = new javax.swing.JToggleButton();
+        btnDangKy = new javax.swing.JToggleButton();
         txtMatKhau = new javax.swing.JPasswordField();
         lblNen = new javax.swing.JLabel();
 
@@ -60,27 +61,27 @@ public class LoginJFrame extends javax.swing.JFrame {
         lblQuenMatKhau.setText("Quên mật khẩu?");
         getContentPane().add(lblQuenMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, -1, -1));
 
-        jToggleButton2.setBackground(new java.awt.Color(51, 153, 255));
-        jToggleButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jToggleButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jToggleButton2.setText("Đăng nhập");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnDangNhap.setBackground(new java.awt.Color(51, 153, 255));
+        btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDangNhap.setForeground(new java.awt.Color(255, 255, 255));
+        btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                btnDangNhapActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 300, -1));
+        getContentPane().add(btnDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 300, -1));
 
-        jToggleButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jToggleButton1.setText("Thoát");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDangKy.setBackground(new java.awt.Color(255, 51, 51));
+        btnDangKy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDangKy.setForeground(new java.awt.Color(255, 255, 255));
+        btnDangKy.setText("Thoát");
+        btnDangKy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                btnDangKyActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 480, 300, -1));
+        getContentPane().add(btnDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 480, 300, -1));
         getContentPane().add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 300, -1));
 
         lblNen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nenDangNhap_1.png"))); // NOI18N
@@ -89,25 +90,26 @@ public class LoginJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        TaiKhoanViews taiKhoan = new TaiKhoanViews(txtTenDangNhap1.getText(), txtMatKhau.getPassword().toString());//Lỗi ở char mật khẩu
-        String tenLoaiNguoiDung = loginService.checkLogin(taiKhoan);
-        if (tenLoaiNguoiDung == null) {
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        TaiKhoanViews taiKhoan = new TaiKhoanViews();
+        taiKhoan.setEmail(txtTenDangNhap1.getText());
+        taiKhoan.setMatKhau(String.valueOf(txtMatKhau.getPassword()));
+        ArrayList<TaiKhoanViews> listAccount = loginService.checkLogin(taiKhoan);
+        if (listAccount.size() == 0) {
             JOptionPane.showMessageDialog(this, "Đăng nhập thất bại, vui lòng kiểm tra lại tài khoản hoặc mật khẩu");
             return;
-        }else{
-            if (tenLoaiNguoiDung.equalsIgnoreCase("Quản Lý")) {
-                JOptionPane.showMessageDialog(this, "Đây là view của quản lý");
-            }else{
-                JOptionPane.showMessageDialog(this, "Đây là view của nhân viên");
-            }
         }
-        
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+        if (listAccount.get(0).getIDLoaiNguoiDung().equalsIgnoreCase("ND1")) {
+            JOptionPane.showMessageDialog(this, "Đây là view của quản lý");
+        } else {
+            JOptionPane.showMessageDialog(this, "Đây là view của nhân viên");
+        }
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_btnDangKyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,8 +148,8 @@ public class LoginJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton btnDangKy;
+    private javax.swing.JToggleButton btnDangNhap;
     private javax.swing.JLabel lblNen;
     private javax.swing.JLabel lblQuenMatKhau;
     private javax.swing.JLabel lblTendangNhap;

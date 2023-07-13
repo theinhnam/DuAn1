@@ -13,9 +13,9 @@ import java.sql.Date;
  */
 public class HoaDon {
 
-    private int idHoaDon;
+    private String idHoaDon;
 
-    private int idTaiKhoan;
+    private String idTaiKhoan;
 
     private String tenHoaDon;
 
@@ -32,7 +32,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public HoaDon(int idHoaDon, int idTaiKhoan, String tenHoaDon, BigDecimal tongTien, Date ngayThanhToan, String diaChiNhanHang, String ghiChu, int tinhTrang) {
+    public HoaDon(String idHoaDon, String idTaiKhoan, String tenHoaDon, BigDecimal tongTien, Date ngayThanhToan, String diaChiNhanHang, String ghiChu, int tinhTrang) {
         this.idHoaDon = idHoaDon;
         this.idTaiKhoan = idTaiKhoan;
         this.tenHoaDon = tenHoaDon;
@@ -43,19 +43,19 @@ public class HoaDon {
         this.tinhTrang = tinhTrang;
     }
 
-    public int getIdHoaDon() {
+    public String getIdHoaDon() {
         return idHoaDon;
     }
 
-    public void setIdHoaDon(int idHoaDon) {
+    public void setIdHoaDon(String idHoaDon) {
         this.idHoaDon = idHoaDon;
     }
 
-    public int getIdTaiKhoan() {
+    public String getIdTaiKhoan() {
         return idTaiKhoan;
     }
 
-    public void setIdTaiKhoan(int idTaiKhoan) {
+    public void setIdTaiKhoan(String idTaiKhoan) {
         this.idTaiKhoan = idTaiKhoan;
     }
 
