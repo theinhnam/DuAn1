@@ -5,6 +5,7 @@
 package Services;
 
 import DomainModels.SanPham;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,4 +21,9 @@ public interface SanPhamService {
     public List<SanPham> getSanPham ();
     public String updateSanPham (SanPham sanPham,String danhMuc,String nhomHuong,String nhanHieu,String xuatXu);
     public String deleteSanPham (String idSanPham);
+    ArrayList<SanPham> findSanPham(String danhMuc, String nhanHieu, String nhomHuong, String xuatXu);
+    String getIDDanhMuc(String tenDanhMuc);
+    String getIDNhomHuong(String tenNhomHuong);
+    String getIDNhanHieu(String tenNhanHieu);
+    String getIDXuatXu(String tenXuatXu);
 }

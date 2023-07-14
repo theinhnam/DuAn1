@@ -196,4 +196,112 @@ public class SanPhamRepo {
         }
         return false;
     }
+    
+    public ArrayList<SanPham> findSanPham(String danhMuc, String nhanHieu, String nhomHuong, String xuatXu){
+        String sql = "SELECT * FROM SANPHAM WHERE ";
+        ArrayList<SanPham> lstSanPham = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();){
+            if (danhMuc.length() != 0) {
+                sql = sql + "IDDanhMuc = " + "N'" + danhMuc + "'";
+            }
+            if (nhanHieu.length() != 0) {
+                sql = sql + "and IDNhanHieu = " + "N'" + nhanHieu + "'";
+            }
+            if (nhomHuong.length() != 0) {
+                sql = sql + "and IDNhomHuong = " + "N'" + nhomHuong + "'";
+            }
+            if (xuatXu.length() != 0) {
+                sql = sql + "and IDXuatXu = " + "N'" + xuatXu + "'";
+            }
+            System.out.println(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                SanPham sanPham = new SanPham();
+                sanPham.setIdSanPham(rs.getString("idSanPham"));
+                sanPham.setTenSanPham(rs.getString("tenSanPham"));
+                sanPham.setIdDanhMuc(rs.getString("IDDanhMuc"));
+                sanPham.setIdNhomHuong(rs.getString("IDNhomHuong"));
+                sanPham.setKichThuoc(rs.getInt("KichThuoc"));
+                sanPham.setIdNhanHieu(rs.getString("IDNhanHieu"));
+                sanPham.setIdXuatxu(rs.getString("IDXuatXu"));
+                sanPham.setMoTa(rs.getString("moTa"));
+                sanPham.setGiaGoc(rs.getBigDecimal("giagoc"));
+                sanPham.setGiaGiam(rs.getBigDecimal("giaGiam"));
+                sanPham.setSoLuongTon(rs.getInt("soLuongTon"));
+                sanPham.setNgayThem(rs.getString("ngayThem"));
+                sanPham.setNgaySua(rs.getString("ngaySua"));
+                sanPham.setTinhTrang(rs.getInt("trangThai"));
+                sanPham.setIdKhuyenMai(rs.getString("IDKhuyenMai"));
+                sanPham.setChietKhau(rs.getInt("chietkhau"));
+                sanPham.setImageUrl(rs.getString("imageUrl"));
+                lstSanPham.add(sanPham);
+            }
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstSanPham;
+        
+    }
+    
+    public String getIDDanhMuc(String tenDanhMuc){
+        String sql = "SELECT IDDanhMuc from DANHMUC WHERE TenDanhMuc = ?";
+        String idDanhMuc = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, tenDanhMuc);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                idDanhMuc = rs.getString("IDDanhMuc");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idDanhMuc;
+    }
+    
+    public String getIDNhomHuong(String tenNhomHuong){
+        String sql = "SELECT IDNhomHuong from NhomHuong WHERE TenNhomHuong = ?";
+        String idNhomHuong = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, tenNhomHuong);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                idNhomHuong = rs.getString("IDNhomHuong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idNhomHuong;
+    }
+    
+    public String getIDNhanHieu(String tenNhanHieu){
+        String sql = "SELECT IDNhanHieu from NhanHieu WHERE TenNhanHieu = ?";
+        String idNhanHieu = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, tenNhanHieu);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                idNhanHieu = rs.getString("IDNhanHieu");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idNhanHieu;
+    }
+    
+    public String getIDXuatXu(String tenXuatXu){
+        String sql = "SELECT IDXuatXu from XuatXu WHERE TenXuatXu = ?";
+        String idXuatXu = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, tenXuatXu);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                idXuatXu = rs.getString("IDXuatXu");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idXuatXu;
+    }
 }

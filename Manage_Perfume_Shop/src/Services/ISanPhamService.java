@@ -6,6 +6,7 @@ package Services;
 
 import DomainModels.SanPham;
 import Repositories.SanPhamRepo;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +65,31 @@ public class ISanPhamService implements SanPhamService {
             return "Thanh cong";
         }
         return "That bai";
+    }
+
+    @Override
+    public ArrayList<SanPham> findSanPham(String danhMuc, String nhanHieu, String nhomHuong, String xuatXu) {
+        return sanPhamRepo.findSanPham(danhMuc, nhanHieu, nhomHuong, xuatXu);
+    }
+
+    @Override
+    public String getIDDanhMuc(String tenDanhMuc) {
+        return sanPhamRepo.getIDDanhMuc(tenDanhMuc);
+    }
+
+    @Override
+    public String getIDNhomHuong(String tenNhomHuong) {
+        return sanPhamRepo.getIDNhomHuong(tenNhomHuong);
+    }
+
+    @Override
+    public String getIDNhanHieu(String tenNhanHieu) {
+        return sanPhamRepo.getIDNhanHieu(tenNhanHieu);
+    }
+
+    @Override
+    public String getIDXuatXu(String tenXuatXu) {
+        return sanPhamRepo.getIDXuatXu(tenXuatXu);
     }
 
 }
