@@ -39,11 +39,10 @@ public class NhanHieuRepositorys {
     }
 
     public boolean insert(NhanHieu nh) {
-        String sql = "insert into NhanHieu(IDNhanHieu,TenNhanHieu,TrangThai) values(?,?,?)";
+        String sql = "insert into NhanHieu(IDNhanHieu,TenNhanHieu,TrangThai) values(NEWID(),?,?)";
         try (Connection con = dBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setObject(1, nh.getIdNhanHieu());
-            ps.setObject(2, nh.getTenNhanHieu());
-            ps.setObject(3, nh.getTrangThai());
+            ps.setObject(1, nh.getTenNhanHieu());
+            ps.setObject(2, nh.getTrangThai());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
