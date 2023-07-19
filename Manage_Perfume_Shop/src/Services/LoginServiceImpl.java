@@ -30,5 +30,15 @@ public class LoginServiceImpl implements LoginService{
         }
         return listAccountViews;
     }
+
+    @Override
+    public String getIDLoaiNguoiDung() {
+        return loginRepo.getIDLoaiNguoiDung();
+    }
+
+    @Override
+    public String getIDByEmail(String email) {
+        return loginRepo.getIDByEmail(email);
+    }
     
 }

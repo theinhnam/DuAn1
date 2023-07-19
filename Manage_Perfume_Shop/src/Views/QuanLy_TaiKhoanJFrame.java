@@ -4,21 +4,56 @@
  */
 package Views;
 
+import Services.QuanLyTaiKhoanService;
+import Services.QuanLyTaiKhoanServiceImpl;
 import Ultilities.XImage;
+import ViewModels.TaiKhoanViews;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Message.RecipientType;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
+
 /**
  *
  * @author DELL
  */
 public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewJFrame
-     */
+    QuanLyTaiKhoanService quanLyTaiKhoanService = new QuanLyTaiKhoanServiceImpl();
+    DefaultTableModel model;
+    DefaultComboBoxModel cboModel;
+    ArrayList<TaiKhoanViews> listTaiKhoan = quanLyTaiKhoanService.findAll();
+    int index;
+    static final String from = "iamnguyenduythanhnam@gmail.com";
     public QuanLy_TaiKhoanJFrame() {
         initComponents();
-        
+        setLocationRelativeTo(null);
         init();
-        
+        loadData();
+        loadComboBoxRole();
     }
 
     /**
@@ -38,13 +73,11 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTaiKhoan = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cboIdLoaiNguoiDung = new javax.swing.JComboBox<>();
         txtEmail = new javax.swing.JTextField();
         txtHoTen = new javax.swing.JTextField();
-        txtIdTaiKhoan = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtMatKhau = new javax.swing.JTextField();
@@ -88,9 +121,22 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id tài khoản", "Id loại người dùng", "Email", "Mật khẩu", "Họ tên", "Ngày thêm", "Tình trạng"
+                "Loại Người Dùng", "Email", "Mật khẩu", "Họ tên", "Ngày thêm", "Ngày sửa", "Tình trạng"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTaiKhoanMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTaiKhoan);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -113,9 +159,6 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin tài khoản "));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Id tài khoản");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Id loại người dùng");
 
@@ -127,8 +170,6 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         txtHoTen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        txtIdTaiKhoan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Email");
@@ -142,23 +183,21 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         jLabel7.setText("Trạng thái");
 
         cboTrangThai.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cboTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Còn hoạt động", "Không còn hoạt động" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(41, 41, 41)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cboIdLoaiNguoiDung, 0, 253, Short.MAX_VALUE)
-                        .addComponent(txtHoTen))
-                    .addComponent(txtIdTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cboIdLoaiNguoiDung, 0, 253, Short.MAX_VALUE)
+                    .addComponent(txtHoTen))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -180,20 +219,18 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel4)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboIdLoaiNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboIdLoaiNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
                     .addComponent(jLabel5)
-                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel7)
                     .addComponent(cboTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
@@ -205,14 +242,29 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Them.png"))); // NOI18N
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Sua.png"))); // NOI18N
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Xoa.png"))); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -273,7 +325,9 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
 
         jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar2.setRollover(true);
+        jToolBar2.setEnabled(false);
         jToolBar2.setMargin(new java.awt.Insets(10, 0, 0, 0));
+        jToolBar2.setOpaque(false);
 
         txtLogoTollbar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logoTollbar.png"))); // NOI18N
         jToolBar2.add(txtLogoTollbar);
@@ -404,6 +458,111 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDatBanHangActionPerformed
 
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        String mss = "";
+        if (txtEmail.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
+            return;
+        }
+        if (quanLyTaiKhoanService.checkEmailMatch(txtEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email đã tồn tại");
+            return;
+        }
+        if (txtHoTen.getText().trim().length()==0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên");
+            return;
+        }
+        if (txtMatKhau.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu");
+            return;
+        }
+        
+        TaiKhoanViews taiKhoanViews = new TaiKhoanViews(txtEmail.getText(), txtMatKhau.getText(), txtHoTen.getText(), "" + cboIdLoaiNguoiDung.getSelectedItem(), cboTrangThai.getSelectedItem().toString().equals("Còn hoạt động") ? 1 : 0);
+        mss = quanLyTaiKhoanService.addTaiKhoan(taiKhoanViews);
+        loadData();
+        JOptionPane.showMessageDialog(this, mss);
+        String idQR = quanLyTaiKhoanService.getIDByEmail(txtEmail.getText());
+        try {    
+            ByteArrayOutputStream out = QRCode.from(idQR).to(ImageType.PNG).stream();
+            String f_name = idQR;
+            String path_name = "D:\\NetbeanWorkspace\\Manage_Perfume_Shop\\FileQRCode\\";
+            FileOutputStream fos = new FileOutputStream(new File(path_name + (f_name + ".PNG")));
+            fos.write(out.toByteArray());
+            fos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP HOST
+        props.put("mail.smtp.port", "587"); // TLS 587 SSL 465
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                // TODO Auto-generated method stub
+                return new PasswordAuthentication("iamnguyenduythanhnam@gmail.com", "ipvmxlatbtwkicnb");
+            }
+        };
+        Session session = Session.getInstance(props, auth);
+        MimeMessage msg = new MimeMessage(session);
+        try {
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+            msg.setFrom(new InternetAddress(from));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(txtEmail.getText(), false));
+            msg.setSubject("Tài khoản nhân viên tại Perfume");
+            msg.setSentDate(new Date());
+            Multipart multipart = new MimeMultipart();
+            BodyPart bodyPart = new MimeBodyPart();
+            bodyPart.setContent("<!DOCTYPE html>\r\n"
+                    + "<html>\r\n"
+                    + "<body>\r\n"
+                    + "\r\n"
+                    + "<h2>Chào " + txtHoTen.getText() + ",</h2>\r\n"
+                    + "<p>Đây là thông tin tài khoản dành cho " + cboIdLoaiNguoiDung.getSelectedItem().toString() + " tại cửa hàng của bạn, vui lòng sử dụng tài khoản này để đăng nhập trong quá trình làm việc tại cửa hàng</p>\r\n"
+                    + "<p>Tài khoản: " + txtEmail.getText() + "</p> \r\n"
+                    + "<p>Mật khẩu: " + txtMatKhau.getText() + "</p> \r\n"
+                    + "<p>Bạn sẽ sử dụng mã QR dưới đây để xác thực cho mỗi lần truy cập ứng dụng tại cửa hàng, vui lòng lưu về máy! </p> \r\n"
+                    + "\r\n"
+                    + "</body>\r\n"
+                    + "</html>", "text/HTML; charset=UTF-8");
+            multipart.addBodyPart(bodyPart);
+            for (int i = 0; i < 1; i++) {
+                DataSource dataSource = new FileDataSource("D:\\NetbeanWorkspace\\Manage_Perfume_Shop\\FileQRCode\\" + idQR + ".PNG");
+                MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                mimeBodyPart.setDataHandler(new DataHandler(dataSource));
+                mimeBodyPart.setFileName(idQR);
+                multipart.addBodyPart(mimeBodyPart);
+            }
+            msg.setContent(multipart);
+            Transport.send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        String mss = "";
+        TaiKhoanViews taiKhoanViews = new TaiKhoanViews(listTaiKhoan.get(index).getIdTaiKhoan(), txtEmail.getText(), txtMatKhau.getText(), txtHoTen.getText(), cboIdLoaiNguoiDung.getSelectedItem().toString(), cboTrangThai.getSelectedItem().toString().equals("Còn hoạt động") ? 1 : 0);
+        mss = quanLyTaiKhoanService.updateTaiKhoan(taiKhoanViews);
+        loadData();
+
+        JOptionPane.showMessageDialog(this, mss);
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        String mss = "";
+        mss = quanLyTaiKhoanService.deleteTaiKhoan(listTaiKhoan.get(index).getIdTaiKhoan());
+        JOptionPane.showMessageDialog(this, mss);
+        loadData();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tblTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTaiKhoanMouseClicked
+        index = tblTaiKhoan.getSelectedRow();
+    }//GEN-LAST:event_tblTaiKhoanMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -517,7 +676,6 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -544,7 +702,6 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
     private javax.swing.JTable tblTaiKhoan;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHoTen;
-    private javax.swing.JTextField txtIdTaiKhoan;
     private javax.swing.JLabel txtLogoTollbar;
     private javax.swing.JTextField txtMatKhau;
     // End of variables declaration//GEN-END:variables
@@ -552,6 +709,31 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
     private void init() {
         this.setLocationRelativeTo(null);
         this.setIconImage(XImage.getApplcon());
+    }
+
+    private void loadData() {
+        model = (DefaultTableModel) tblTaiKhoan.getModel();
+        model.setRowCount(0);
+        listTaiKhoan = quanLyTaiKhoanService.findAll();
+        for (TaiKhoanViews taiKhoanViews : listTaiKhoan) {
+            model.addRow(new Object[]{
+                taiKhoanViews.getTenLoaiNguoiDung(),
+                taiKhoanViews.getEmail(),
+                taiKhoanViews.getMatKhau(),
+                taiKhoanViews.getHoTen(),
+                taiKhoanViews.getNgayThem(),
+                taiKhoanViews.getNgaySua(),
+                taiKhoanViews.getTinhTrang() == 1 ? "Còn hoạt động" : "Không còn hoạt động"
+            });
+        }
+    }
+
+    private void loadComboBoxRole() {
+        cboModel = (DefaultComboBoxModel) cboIdLoaiNguoiDung.getModel();
+        ArrayList<String> listTenLoaiNguoiDung = quanLyTaiKhoanService.getAllTenLoaiNguoiDung();
+        for (String string : listTenLoaiNguoiDung) {
+            cboModel.addElement(string);
+        }
     }
 
 }

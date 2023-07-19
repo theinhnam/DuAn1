@@ -18,7 +18,7 @@ import java.sql.PreparedStatement;
 public class LoginRepositories {
 
     public ArrayList<TaiKhoan> checkLogin(TaiKhoan o) {
-        String sql = "SELECT * FROM TaiKhoan WHERE Email = ? and MatKhau = ?";
+        String sql = "SELECT * FROM TaiKhoan WHERE Email = ? and MatKhau = ? and TrangThai = 1";
         ArrayList<TaiKhoan> listAccount = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, o.getEmail());
@@ -32,5 +32,34 @@ public class LoginRepositories {
             e.printStackTrace();
         }
         return listAccount;
+    }
+    
+    public String getIDLoaiNguoiDung(){
+        String sql = "SELECT IDLoaiNguoiDung FROM LoaiNguoiDung WHERE Ten = N'Quản lý'";
+        String idLoaiNguoiDung = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idLoaiNguoiDung = rs.getString("IDLoaiNguoiDung");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idLoaiNguoiDung;
+    }
+    
+    public String getIDByEmail(String email){
+        String sql = "SELECT IDTaiKhoan FROM TaiKhoan WHERE Email = ?";
+        String idTaiKhoan = "";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idTaiKhoan = rs.getString("IDTaiKhoan");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idTaiKhoan;
     }
 }

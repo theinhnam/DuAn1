@@ -4,17 +4,16 @@
  */
 package Services;
 
-import ViewModels.TaiKhoanViews;
+import DomainModels.XuatXu;
 import java.util.ArrayList;
 
 /**
  *
- * @author theinhnam
+ * @author DELL
  */
-public interface LoginService {
-    ArrayList<TaiKhoanViews> checkLogin(TaiKhoanViews o);
-    
-    String getIDLoaiNguoiDung();
-    
-    String getIDByEmail(String email);
+public interface XuatXuService {
+    public ArrayList<XuatXu> getList();
+    public String insert(XuatXu xx);
+    public String update(XuatXu xx);
+    public String delete(String id);
 }

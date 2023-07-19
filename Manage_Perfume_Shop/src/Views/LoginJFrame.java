@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class LoginJFrame extends javax.swing.JFrame {
 
     LoginService loginService = new LoginServiceImpl();
+    public String _idAccountLogin = "";
 
     public LoginJFrame() {
         initComponents();
@@ -99,12 +100,16 @@ public class LoginJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Đăng nhập thất bại, vui lòng kiểm tra lại tài khoản hoặc mật khẩu");
             return;
         }
-        if (listAccount.get(0).getIDLoaiNguoiDung().equalsIgnoreCase("ND1")) {
+        if (listAccount.get(0).getIdLoaiNguoiDung().equals(loginService.getIDLoaiNguoiDung())) {
             JOptionPane.showMessageDialog(this, "Đây là view của quản lý");
+            new AuthenticatorLogin().setVisible(true);
+            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Đây là view của nhân viên");
+            new AuthenticatorLogin().setVisible(true);
+            this.setVisible(false);
         }
-
+        _idAccountLogin = loginService.getIDByEmail(txtTenDangNhap1.getText());
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
