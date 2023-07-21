@@ -16,4 +16,6 @@ public interface NhomHuongService {
     public String insert(NhomHuong nh);
     public String update(NhomHuong nh);
     public String delete(String id);
+    public String getIDByName(String nhomHuong);
+    public void updateTrangThai(String idNhomHuong);
 }

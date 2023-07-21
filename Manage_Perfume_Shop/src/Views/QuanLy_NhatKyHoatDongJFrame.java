@@ -4,7 +4,24 @@
  */
 package Views;
 
+import Services.INhatKyHoatDong;
+import Services.NhatKyHoatDongService;
 import Ultilities.XImage;
+import ViewModels.BanHang_HoaDonChiTietView;
+import ViewModels.BanHang_HoaDonView;
+import ViewModels.NhapSanPhamView;
+import ViewModels.NhatKyHoatDong_HoaDonChiTietView;
+import ViewModels.NhatKyHoatDong_HoaDonView;
+import ViewModels.SanPhamView;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author DELL
@@ -14,11 +31,143 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+    NhatKyHoatDongService nhatKyHoatDongService = new INhatKyHoatDong();
+    DefaultTableModel nhapModel;
+    DefaultTableModel xuatModel;
+    List<NhapSanPhamView> lstNhap = nhatKyHoatDongService.getNhap();
+    List<NhapSanPhamView> lstXuat = nhatKyHoatDongService.getXuat();
+    List<NhatKyHoatDong_HoaDonView> lstHoaDon = nhatKyHoatDongService.getHoaDon();
+    DefaultTableModel modelHoaDon;
+    List<NhatKyHoatDong_HoaDonChiTietView> lstHoaDonChiTietView;
+    DefaultTableModel modelHoaDonChiTiet;
+    int hoaDonIndex = 0;
+    List<String> lstEmail;
+
     public QuanLy_NhatKyHoatDongJFrame() {
         initComponents();
-        
+        fillToTableNhap(lstNhap);
+        fillToTableXuat(lstXuat);
         init();
-        
+        fillToTableHoaDon(lstHoaDon);
+        fillToCboEmail();
+    }
+
+    public void fillToTableNhap(List<NhapSanPhamView> lstNhapSanPhamView) {
+        if (lstNhapSanPhamView.isEmpty()) {
+            System.out.println("List nhap Rong");
+        } else {
+
+            nhapModel = (DefaultTableModel) tblNhap.getModel();
+            nhapModel.setRowCount(0);
+            for (NhapSanPhamView nhapSanPhamView : lstNhapSanPhamView) {
+                nhapModel.addRow(new Object[]{
+                    nhapSanPhamView.getemail(),
+                    nhapSanPhamView.getTenSanPham(),
+                    nhapSanPhamView.getSoLuong(),
+                    nhapSanPhamView.getDonGia(),
+                    nhapSanPhamView.getNgayThem(),});
+            }
+
+        }
+    }
+
+    public void fillToTableXuat(List<NhapSanPhamView> lstNhapSanPhamView) {
+        if (lstNhapSanPhamView.isEmpty()) {
+            System.out.println("List xuat Rong");
+        } else {
+            xuatModel = (DefaultTableModel) tblXuat.getModel();
+            xuatModel.setRowCount(0);
+            for (NhapSanPhamView nhapSanPhamView : lstNhapSanPhamView) {
+                xuatModel.addRow(new Object[]{
+                    nhapSanPhamView.getemail(),
+                    nhapSanPhamView.getTenSanPham(),
+                    nhapSanPhamView.getSoLuong(),
+                    nhapSanPhamView.getDonGia(),
+                    nhapSanPhamView.getNgayThem(),});
+            }
+        }
+    }
+
+    public void fillToTableHoaDon(List<NhatKyHoatDong_HoaDonView> lstHoaDonView) {
+        if (lstHoaDonView.isEmpty()) {
+            System.out.println("List San Pham Rong");
+        } else {
+            modelHoaDon = (DefaultTableModel) tblHoaDon.getModel();
+            modelHoaDon.setRowCount(0);
+
+            for (NhatKyHoatDong_HoaDonView HoaDonView : lstHoaDonView) {
+                modelHoaDon.addRow(new Object[]{
+                    HoaDonView.getStt(),
+                    HoaDonView.getIdHoaDon(),
+                    HoaDonView.getTenHoaDon(),
+                    HoaDonView.getEmail(),
+                    HoaDonView.getTongTien(),
+                    HoaDonView.getNgayThem(),
+                    HoaDonView.getGhiChu(),
+                    HoaDonView.getTinhTrang()});
+
+            }
+        }
+
+    }
+
+    public void fillToTableHoaDonChiTiet(List<NhatKyHoatDong_HoaDonChiTietView> lstHoaDonChiTietView) {
+        if (lstHoaDonChiTietView.isEmpty()) {
+            System.out.println("List San Pham Rong");
+        } else {
+            modelHoaDonChiTiet = (DefaultTableModel) tblHoaDonChiTiet.getModel();
+            modelHoaDonChiTiet.setRowCount(0);
+
+            for (NhatKyHoatDong_HoaDonChiTietView HoaDonChiTietView : lstHoaDonChiTietView) {
+                modelHoaDonChiTiet.addRow(new Object[]{
+                    HoaDonChiTietView.getIdHoaDon(),
+                    HoaDonChiTietView.getTenSanPham(),
+                    HoaDonChiTietView.getSoLuong(),
+                    HoaDonChiTietView.getDonGia(),
+                    HoaDonChiTietView.getNgayThem(),
+                    HoaDonChiTietView.getTrangThai(),});
+            }
+        }
+
+    }
+
+    public void fillOnClickHoaDon(int index) {
+        if (nhatKyHoatDongService.getHoaDonChiTietByIdHoaDon(lstHoaDon.get(hoaDonIndex).getIdHoaDon()).isEmpty()) {
+            System.out.println("List San Pham Rong");
+            modelHoaDonChiTiet = (DefaultTableModel) tblHoaDonChiTiet.getModel();
+            modelHoaDonChiTiet.setRowCount(0);
+        } else {
+            System.out.println("Vao else");
+            lstHoaDonChiTietView = nhatKyHoatDongService.getHoaDonChiTietByIdHoaDon(lstHoaDon.get(hoaDonIndex).getIdHoaDon());
+            fillToTableHoaDonChiTiet(lstHoaDonChiTietView);
+        }
+
+    }
+
+    public void fillToCboEmail() {
+        lstEmail = nhatKyHoatDongService.getEmail();
+        if (lstEmail.isEmpty()) {
+            System.out.println("List Cbo Rong");
+        } else {
+            cboEmail.removeAllItems();
+            for (String string : lstEmail) {
+
+                cboEmail.addItem(string);
+            }
+            cboEmail.addItem("All");
+        }
+    }
+
+    public int conVertTinhTrangToInt(String tinhTrang) {
+        int number = 0;
+        if (tinhTrang.equalsIgnoreCase("Đã thanh toán")) {
+            return 1;
+        } else if (tinhTrang.equalsIgnoreCase("Đã hủy")) {
+            return 0;
+        } else {
+            return 2;
+        }
+
     }
 
     /**
@@ -36,22 +185,26 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        btnThem = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        tblHoaDon = new javax.swing.JTable();
+        btnTimKiem = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        cboTinhTrang = new javax.swing.JComboBox<>();
+        startDate = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        cboEmail = new javax.swing.JComboBox<>();
+        endDate = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblHoaDonChiTiet = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblNhap = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tblXuat = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jToolBar2 = new javax.swing.JToolBar();
         txtLogoTollbar = new javax.swing.JLabel();
@@ -85,49 +238,86 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id hóa đơn", "Id tài khoản", "Tên hóa đơn", "Tổng tiền", "Ngày thanh toán", "Địa chỉ nhận hàng", "Ghi chú", "Ngày thêm", "Tình trạng"
+                "Stt", "Id hóa đơn", "Tên hóa đơn", "Email tài khoản", "Tổng tiền", "Ngày thêm", "Ghi chú", "Tình trạng"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
 
-        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Untitled-1.png"))); // NOI18N
-        btnThem.setText("Tìm kiếm");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHoaDonMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblHoaDon);
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Untitled-1.png"))); // NOI18N
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Tình trạng");
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cboTinhTrang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cboTinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã thanh toán", "Đã hủy", "Chờ thanh toán", "All", " " }));
 
-        jDateChooser1.setDateFormatString("dd-MM-yyyy");
+        startDate.setDateFormatString("yyyy-MM-dd");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Email");
+
+        cboEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        endDate.setDateFormatString("yyyy-MM-dd");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Ngày bắt đầu");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Ngày kết thúc");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnThem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 967, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 967, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnTimKiem)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboTinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(startDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(endDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,37 +325,48 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addComponent(cboEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addComponent(startDate, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(cboTinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(22, 22, 22)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chi tiết hóa đơn ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDonChiTiet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id hóa đơn", "Id sản phẩm", "Số lượng", "Giá nhập", "Ngày thêm", "Tình trạng"
+                "Id hóa đơn", "Tên sản phẩm", "Số lượng", "Đơn giá", "Ngày thêm", "Tình trạng"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblHoaDonChiTiet);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 956, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +394,7 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Hóa đơn", jPanel6);
@@ -203,15 +404,15 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập hàng"));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblNhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id người dùng", "Sản phẩm", "Số lượng nhập", "Đơn giá"
+                "Email người dùng", "Sản phẩm", "Số lượng nhập", "Đơn giá", "Ngày thêm"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblNhap);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -233,15 +434,15 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Xuất hàng "));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tblXuat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id người dùng", "Sản phẩm", "Số lượng xuất", "Đơn giá"
+                "Email người dùng", "Sản phẩm", "Số lượng xuất", "Đơn giá", "Ngày thêm"
             }
         ));
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane4.setViewportView(tblXuat);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -306,7 +507,9 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
 
         jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar2.setRollover(true);
+        jToolBar2.setEnabled(false);
         jToolBar2.setMargin(new java.awt.Insets(10, 0, 0, 0));
+        jToolBar2.setOpaque(false);
 
         txtLogoTollbar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logoTollbar.png"))); // NOI18N
         jToolBar2.add(txtLogoTollbar);
@@ -435,6 +638,42 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDatBanHangActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        if (((JTextField) startDate.getDateEditor().getUiComponent()).getText().isEmpty() || ((JTextField) endDate.getDateEditor().getUiComponent()).getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Khong dc de trong 1 trong 2 ngay bat dau hoac ket thuc");
+        } else {
+            String ngayBatDau = ((JTextField) startDate.getDateEditor().getUiComponent()).getText();
+            String ngayKetThuc = ((JTextField) endDate.getDateEditor().getUiComponent()).getText();
+            String idTaiKhoan = nhatKyHoatDongService.getIdTaiKhoan(String.valueOf(cboEmail.getSelectedItem()));
+            String trangThai = "";
+            if (idTaiKhoan.equalsIgnoreCase("All")) {
+                idTaiKhoan = "";
+            }
+            if (String.valueOf(cboTinhTrang.getSelectedItem()).equalsIgnoreCase("All")) {
+                trangThai = "";
+            } else {
+                trangThai = String.valueOf(conVertTinhTrangToInt(String.valueOf(cboTinhTrang.getSelectedItem())));
+            }
+            System.out.println(idTaiKhoan);
+            System.out.println(trangThai);
+            lstHoaDon = nhatKyHoatDongService.findHoaDon(idTaiKhoan, trangThai, ngayBatDau, ngayKetThuc);
+            if (lstHoaDon.isEmpty()) {
+                modelHoaDon.setRowCount(0);
+                JOptionPane.showMessageDialog(this, "List Rong");
+            } else {
+                fillToTableHoaDon(lstHoaDon);
+            }
+        }
+
+
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
+        hoaDonIndex = tblHoaDon.getSelectedRow();
+
+        fillOnClickHoaDon(hoaDonIndex);
+    }//GEN-LAST:event_tblHoaDonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -524,6 +763,70 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -537,16 +840,20 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDatBanHang;
     private javax.swing.JButton btnKhuyenMai;
     private javax.swing.JButton btnSanPham;
-    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnThongKe;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btntaiKhoan;
     private javax.swing.JButton btntrangChu;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cboEmail;
+    private javax.swing.JComboBox<String> cboTinhTrang;
+    private com.toedter.calendar.JDateChooser endDate;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -569,12 +876,12 @@ public class QuanLy_NhatKyHoatDongJFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar2;
+    private com.toedter.calendar.JDateChooser startDate;
+    private javax.swing.JTable tblHoaDon;
+    private javax.swing.JTable tblHoaDonChiTiet;
+    private javax.swing.JTable tblNhap;
+    private javax.swing.JTable tblXuat;
     private javax.swing.JLabel txtLogoTollbar;
     // End of variables declaration//GEN-END:variables
 

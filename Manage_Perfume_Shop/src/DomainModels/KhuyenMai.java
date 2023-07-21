@@ -16,20 +16,26 @@ public class KhuyenMai {
 
     private String tenKhuyenMai;
 
-    private Date ngayBatDau;
+    private Date ngayThem;
 
-    private Date ngayKetThuc;
+    private Date ngaySua;
+    
+    private int soLanApDung ;
+    
+    private int chietKhau ;
 
     private int tinhTrang;
 
     public KhuyenMai() {
     }
 
-    public KhuyenMai(String idKhuyenMai, String tenKhuyenMai, Date ngayBatDau, Date ngayKetThuc, int tinhTrang) {
+    public KhuyenMai(String idKhuyenMai, String tenKhuyenMai, Date ngayThem, Date ngaySua, int soLanApDung, int chietKhau, int tinhTrang) {
         this.idKhuyenMai = idKhuyenMai;
         this.tenKhuyenMai = tenKhuyenMai;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
+        this.ngayThem = ngayThem;
+        this.ngaySua = ngaySua;
+        this.soLanApDung = soLanApDung;
+        this.chietKhau = chietKhau;
         this.tinhTrang = tinhTrang;
     }
 
@@ -49,20 +55,36 @@ public class KhuyenMai {
         this.tenKhuyenMai = tenKhuyenMai;
     }
 
-    public Date getNgayBatDau() {
-        return ngayBatDau;
+    public Date getNgayThem() {
+        return ngayThem;
     }
 
-    public void setNgayBatDau(Date ngayBatDau) {
-        this.ngayBatDau = ngayBatDau;
+    public void setNgayThem(Date ngayThem) {
+        this.ngayThem = ngayThem;
     }
 
-    public Date getNgayKetThuc() {
-        return ngayKetThuc;
+    public Date getNgaySua() {
+        return ngaySua;
     }
 
-    public void setNgayKetThuc(Date ngayKetThuc) {
-        this.ngayKetThuc = ngayKetThuc;
+    public void setNgaySua(Date ngaySua) {
+        this.ngaySua = ngaySua;
+    }
+
+    public int getSoLanApDung() {
+        return soLanApDung;
+    }
+
+    public void setSoLanApDung(int soLanApDung) {
+        this.soLanApDung = soLanApDung;
+    }
+
+    public int getChietKhau() {
+        return chietKhau;
+    }
+
+    public void setChietKhau(int chietKhau) {
+        this.chietKhau = chietKhau;
     }
 
     public int getTinhTrang() {
@@ -73,4 +95,5 @@ public class KhuyenMai {
         this.tinhTrang = tinhTrang;
     }
 
+    
 }

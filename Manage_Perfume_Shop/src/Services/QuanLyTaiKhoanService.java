@@ -20,4 +20,5 @@ public interface QuanLyTaiKhoanService {
     String deleteTaiKhoan(String email);
     String getIDByEmail(String email);
     boolean checkEmailMatch(String email);
+    void deleteByEmail(String email);
 }

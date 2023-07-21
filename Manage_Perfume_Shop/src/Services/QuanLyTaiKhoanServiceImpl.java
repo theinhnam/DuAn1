@@ -67,4 +67,9 @@ public class QuanLyTaiKhoanServiceImpl implements QuanLyTaiKhoanService {
         return false;
     }
 
+    @Override
+    public void deleteByEmail(String email) {
+        quanLyTaiKhoanRepo.deleteByEmail(email);
+    }
+
 }

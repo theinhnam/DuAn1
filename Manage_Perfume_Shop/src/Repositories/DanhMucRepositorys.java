@@ -73,5 +73,15 @@ public class DanhMucRepositorys {
         }
         return false;
     }
+    
+    public void updateTrangThai(String idDanhMuc){
+        String sql = "UPDATE DanhMuc SET TrangThai = 1 WHERE TenDanhMuc = ?";
+        try (Connection conn = dBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, idDanhMuc);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

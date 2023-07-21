@@ -50,4 +50,9 @@ public class XuatXuServiceImpl implements XuatXuService {
         }
     }
 
+    @Override
+    public void updateTrangThai(String xuatXu) {
+        xuatXuRepositorys.updateTrangThai(xuatXu);
+    }
+
 }

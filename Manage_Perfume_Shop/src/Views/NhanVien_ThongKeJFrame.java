@@ -239,7 +239,9 @@ public class NhanVien_ThongKeJFrame extends javax.swing.JFrame {
 
         jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar2.setRollover(true);
+        jToolBar2.setEnabled(false);
         jToolBar2.setMargin(new java.awt.Insets(10, 0, 0, 0));
+        jToolBar2.setOpaque(false);
 
         txtLogoTollbar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logoTollbar.png"))); // NOI18N
         jToolBar2.add(txtLogoTollbar);

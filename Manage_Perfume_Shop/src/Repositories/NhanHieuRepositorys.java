@@ -73,5 +73,15 @@ public class NhanHieuRepositorys {
         }
         return false;
     }
+    
+    public void updateTrangThai(String nhanHieu){
+        String sql = "UPDATE NhanHieu SET TrangThai = 1 WHERE TenNhanHieu = ?";
+        try (Connection conn = dBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, nhanHieu);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

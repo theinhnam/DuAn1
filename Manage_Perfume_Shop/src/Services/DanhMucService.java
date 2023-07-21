@@ -16,4 +16,5 @@ public interface DanhMucService {
     public String insert(DanhMuc dm);
     public String update(DanhMuc dm);
     public String delete(String id);
+    public void updateTrangThai(String idDanhMuc);
 }

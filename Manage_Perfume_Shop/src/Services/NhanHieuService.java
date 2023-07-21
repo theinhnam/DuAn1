@@ -16,4 +16,5 @@ public interface NhanHieuService {
     public String insert(NhanHieu nh);
     public String update(NhanHieu nh);
     public String delete(String id);
+    public void updateTrangThai(String nhanHieu);
 }

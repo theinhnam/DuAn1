@@ -73,5 +73,15 @@ public class XuatXuRepositorys {
         }
         return false;
     }
-
+    
+    public void updateTrangThai(String tenXuatXu){
+        String sql = "UPDATE XuatXu SET TrangThai = 1 WHERE TenXuatXu = ?";
+        try (Connection conn = dBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, tenXuatXu);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

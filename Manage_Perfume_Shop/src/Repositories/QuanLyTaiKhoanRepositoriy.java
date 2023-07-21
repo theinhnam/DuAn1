@@ -141,7 +141,7 @@ public class QuanLyTaiKhoanRepositoriy {
     }
     
     public boolean checkEmailMatch(String email){
-        String sql = "SELECT * FROM TaiKhoan WHERE Email = ?";
+        String sql = "SELECT * FROM TaiKhoan WHERE Email = ? and (TrangThai = 0 or TrangThai = 1)";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, email);
             ResultSet rs = ps.executeQuery();
@@ -152,6 +152,16 @@ public class QuanLyTaiKhoanRepositoriy {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public void deleteByEmail(String email){
+        String sql = "DELETE FROM TaiKhoan WHERE Email = ?";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, email);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

@@ -48,5 +48,10 @@ public class DanhMucServiceImpl implements DanhMucService{
             return "Xoa that bai";
         }
     }
+
+    @Override
+    public void updateTrangThai(String idDanhMuc) {
+        danhMucRepositorys.updateTrangThai(idDanhMuc);
+    }
     
 }

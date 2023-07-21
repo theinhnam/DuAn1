@@ -48,5 +48,10 @@ public class NhanHieuServiceImpl implements NhanHieuService{
             return "Xoa that bai";
         }
     }
+
+    @Override
+    public void updateTrangThai(String nhanHieu) {
+        nhanHieuRepositorys.updateTrangThai(nhanHieu);
+    }
     
 }

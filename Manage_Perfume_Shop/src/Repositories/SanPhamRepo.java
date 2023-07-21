@@ -218,9 +218,7 @@ public class SanPhamRepo {
             if (xuatXu.length() != 0) {
                 sql = sql + "and IDXuatXu = " + "N'" + xuatXu + "'";
             }
-            if (danhMuc.length() == 0 && nhanHieu.length() == 0 && nhomHuong.length() == 0 && xuatXu.length() == 0) {
-                sql = "SELECT * FROM SanPham";
-            }
+            System.out.println(sql);
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -239,6 +237,7 @@ public class SanPhamRepo {
                 sanPham.setNgayThem(rs.getString("ngayThem"));
                 sanPham.setNgaySua(rs.getString("ngaySua"));
                 sanPham.setTinhTrang(rs.getInt("trangThai"));
+//                sanPham.setIdKhuyenMai(rs.getString("IDKhuyenMai"));
                 sanPham.setChietKhau(rs.getInt("chietkhau"));
                 sanPham.setImageUrl(rs.getString("imageUrl"));
                 lstSanPham.add(sanPham);
@@ -248,6 +247,7 @@ public class SanPhamRepo {
             e.printStackTrace();
         }
         return lstSanPham;
+
     }
 
     public String getIDDanhMuc(String tenDanhMuc) {
@@ -407,13 +407,13 @@ public class SanPhamRepo {
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, idDanhMuc);
             int result = ps.executeUpdate();
-            return result>0;
+            return result > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-    
+
     public boolean setNhanHieuNone(String idNhanHieu) {
         String sql = " update SanPham\n"
                 + "set idNhanHieu = '5315A885-D980-4057-B1B6-D77978D23816'\n"
@@ -421,13 +421,13 @@ public class SanPhamRepo {
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, idNhanHieu);
             int result = ps.executeUpdate();
-            return result>0;
+            return result > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-    
+
     public boolean setNhomHuongNone(String idNhomHuong) {
         String sql = " update SanPham\n"
                 + "set idNhomHuong = '30A37E08-11D6-41C9-ADED-4AF654DA7D6C'\n"
@@ -435,13 +435,13 @@ public class SanPhamRepo {
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, idNhomHuong);
             int result = ps.executeUpdate();
-            return result>0;
+            return result > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-    
+
     public boolean setXuatXuNone(String idXuatXu) {
         String sql = " update SanPham\n"
                 + "set idXuatXu = 'DF82F022-5F09-4E3B-B688-B283830B5988'\n"
@@ -449,7 +449,76 @@ public class SanPhamRepo {
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setObject(1, idXuatXu);
             int result = ps.executeUpdate();
-            return result>0;
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //Nam code ---------------------------------------------------------------------
+    public boolean updateSoLuongTon(SanPham sp) {
+        String sql = "update SanPham set SoLuongTon=? where TenSanPham=?";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, sp.getSoLuongTon());
+            ps.setObject(2, sp.getTenSanPham());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkDanhMuc(String danhMuc) {
+        String sql = "SELECT * FROM DanhMuc WHERE ? in (SELECT TenDanhMuc FROM DanhMuc)";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, danhMuc);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkNhomHuong(String nhomHuong) {
+        String sql = "SELECT * FROM NhomHuong WHERE ? in (SELECT TenNhomHuong FROM NhomHuong)";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, nhomHuong);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkXuatXu(String xuatXu) {
+        String sql = "SELECT * FROM XuatXu WHERE ? in (SELECT TenXuatXu FROM XuatXu)";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, xuatXu);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkNhanHieu(String nhanHieu) {
+        String sql = "SELECT * FROM NhanHieu WHERE ? in (SELECT TenNhanHieu FROM NhanHieu)";
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, nhanHieu);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

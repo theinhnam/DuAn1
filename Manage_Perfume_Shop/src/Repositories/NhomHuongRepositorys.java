@@ -73,5 +73,30 @@ public class NhomHuongRepositorys {
         }
         return false;
     }
+    
+    public String getIDByName(String tenNhomHuong){
+        String sql = "SELECT IDNhomHuong FROM NhomHuong WHERE TenNhomHuong = ?";
+        String idNhomHuong = "";
+        try (Connection conn = dBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, tenNhomHuong);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idNhomHuong = rs.getString("IDNhomHuong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idNhomHuong;
+    }
+    
+    public void updateTrangThai(String idNhomHuong){
+        String sql = "UPDATE NhomHuong SET TrangThai = 1 WHERE IDNhomHuong = ?";
+        try (Connection conn = dBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, idNhomHuong);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

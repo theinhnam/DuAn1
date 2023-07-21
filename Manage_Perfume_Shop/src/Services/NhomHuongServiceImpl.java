@@ -49,4 +49,14 @@ public class NhomHuongServiceImpl implements NhomHuongService {
         }
     }
 
+    @Override
+    public String getIDByName(String nhomHuong) {
+        return nhomHuongRepositorys.getIDByName(nhomHuong);
+    }
+
+    @Override
+    public void updateTrangThai(String idNhomHuong) {
+        nhomHuongRepositorys.updateTrangThai(idNhomHuong);
+    }
+
 }

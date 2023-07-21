@@ -6,6 +6,7 @@ package Views;
 
 import Services.QuanLyTaiKhoanService;
 import Services.QuanLyTaiKhoanServiceImpl;
+import Ultilities.EmailValidator;
 import Ultilities.XImage;
 import ViewModels.TaiKhoanViews;
 import java.io.ByteArrayOutputStream;
@@ -24,6 +25,7 @@ import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
+import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -48,6 +50,7 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
     ArrayList<TaiKhoanViews> listTaiKhoan = quanLyTaiKhoanService.findAll();
     int index;
     static final String from = "iamnguyenduythanhnam@gmail.com";
+
     public QuanLy_TaiKhoanJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -464,11 +467,16 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
             return;
         }
+        EmailValidator emailValid = new EmailValidator();
+        if (!emailValid.validate(txtEmail.getText().trim())) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập email khả dụng");
+            return;
+        }
         if (quanLyTaiKhoanService.checkEmailMatch(txtEmail.getText())) {
             JOptionPane.showMessageDialog(this, "Email đã tồn tại");
             return;
         }
-        if (txtHoTen.getText().trim().length()==0) {
+        if (txtHoTen.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập họ tên");
             return;
         }
@@ -476,13 +484,12 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu");
             return;
         }
-        
         TaiKhoanViews taiKhoanViews = new TaiKhoanViews(txtEmail.getText(), txtMatKhau.getText(), txtHoTen.getText(), "" + cboIdLoaiNguoiDung.getSelectedItem(), cboTrangThai.getSelectedItem().toString().equals("Còn hoạt động") ? 1 : 0);
         mss = quanLyTaiKhoanService.addTaiKhoan(taiKhoanViews);
         loadData();
         JOptionPane.showMessageDialog(this, mss);
         String idQR = quanLyTaiKhoanService.getIDByEmail(txtEmail.getText());
-        try {    
+        try {
             ByteArrayOutputStream out = QRCode.from(idQR).to(ImageType.PNG).stream();
             String f_name = idQR;
             String path_name = "D:\\NetbeanWorkspace\\Manage_Perfume_Shop\\FileQRCode\\";
@@ -492,7 +499,7 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP HOST
         props.put("mail.smtp.port", "587"); // TLS 587 SSL 465
@@ -503,7 +510,7 @@ public class QuanLy_TaiKhoanJFrame extends javax.swing.JFrame {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 // TODO Auto-generated method stub
-                return new PasswordAuthentication("iamnguyenduythanhnam@gmail.com", "ipvmxlatbtwkicnb");
+                return new PasswordAuthentication("iamnguyenduythanhnam@gmail.com", "hprxelbknevzgwgc");
             }
         };
         Session session = Session.getInstance(props, auth);

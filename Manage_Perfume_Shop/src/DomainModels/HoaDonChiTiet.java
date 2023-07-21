@@ -17,17 +17,25 @@ public class HoaDonChiTiet {
     private String idSanPham;
 
     private int soLuong;
+    
+    private String ngayThem;
+    private String ngaySua;
 
     private BigDecimal donGia;
+    
+    private int trangThai;
 
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(String idHoaDon, String idSanPham, int soLuong, BigDecimal donGia) {
+    public HoaDonChiTiet(String idHoaDon, String idSanPham, int soLuong, String ngayThem, String ngaySua, BigDecimal donGia, int trangThai) {
         this.idHoaDon = idHoaDon;
         this.idSanPham = idSanPham;
         this.soLuong = soLuong;
+        this.ngayThem = ngayThem;
+        this.ngaySua = ngaySua;
         this.donGia = donGia;
+        this.trangThai = trangThai;
     }
 
     public String getIdHoaDon() {
@@ -54,6 +62,22 @@ public class HoaDonChiTiet {
         this.soLuong = soLuong;
     }
 
+    public String getNgayThem() {
+        return ngayThem;
+    }
+
+    public void setNgayThem(String ngayThem) {
+        this.ngayThem = ngayThem;
+    }
+
+    public String getNgaySua() {
+        return ngaySua;
+    }
+
+    public void setNgaySua(String ngaySua) {
+        this.ngaySua = ngaySua;
+    }
+
     public BigDecimal getDonGia() {
         return donGia;
     }
@@ -62,4 +86,15 @@ public class HoaDonChiTiet {
         this.donGia = donGia;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    
+    
+    
 }

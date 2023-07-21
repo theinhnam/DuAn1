@@ -21,26 +21,26 @@ public class HoaDon {
 
     private BigDecimal tongTien;
 
-    private Date ngayThanhToan;
-
-    private String diaChiNhanHang;
-
     private String ghiChu;
 
+    private String ngayThem;
+
     private int tinhTrang;
+
+    private int stt;
 
     public HoaDon() {
     }
 
-    public HoaDon(String idHoaDon, String idTaiKhoan, String tenHoaDon, BigDecimal tongTien, Date ngayThanhToan, String diaChiNhanHang, String ghiChu, int tinhTrang) {
+    public HoaDon(String idHoaDon, String idTaiKhoan, String tenHoaDon, BigDecimal tongTien, String ghiChu, String ngayThem, int tinhTrang, int stt) {
         this.idHoaDon = idHoaDon;
         this.idTaiKhoan = idTaiKhoan;
         this.tenHoaDon = tenHoaDon;
         this.tongTien = tongTien;
-        this.ngayThanhToan = ngayThanhToan;
-        this.diaChiNhanHang = diaChiNhanHang;
         this.ghiChu = ghiChu;
+        this.ngayThem = ngayThem;
         this.tinhTrang = tinhTrang;
+        this.stt = stt;
     }
 
     public String getIdHoaDon() {
@@ -75,22 +75,6 @@ public class HoaDon {
         this.tongTien = tongTien;
     }
 
-    public Date getNgayThanhToan() {
-        return ngayThanhToan;
-    }
-
-    public void setNgayThanhToan(Date ngayThanhToan) {
-        this.ngayThanhToan = ngayThanhToan;
-    }
-
-    public String getDiaChiNhanHang() {
-        return diaChiNhanHang;
-    }
-
-    public void setDiaChiNhanHang(String diaChiNhanHang) {
-        this.diaChiNhanHang = diaChiNhanHang;
-    }
-
     public String getGhiChu() {
         return ghiChu;
     }
@@ -99,12 +83,28 @@ public class HoaDon {
         this.ghiChu = ghiChu;
     }
 
+    public String getNgayThem() {
+        return ngayThem;
+    }
+
+    public void setNgayThem(String ngayThem) {
+        this.ngayThem = ngayThem;
+    }
+
     public int getTinhTrang() {
         return tinhTrang;
     }
 
     public void setTinhTrang(int tinhTrang) {
         this.tinhTrang = tinhTrang;
+    }
+
+    public int getStt() {
+        return stt;
+    }
+
+    public void setStt(int stt) {
+        this.stt = stt;
     }
 
 }

@@ -29,5 +29,12 @@ public interface SanPhamService {
     public void setDanhMucNone (String idDanhMuc); 
     public void setNhanHieuNone (String idNhanHieu); 
     public void setNhomHuongNone (String idNhomHuong); 
-    public void setXuatXuNone (String idXuatXu); 
+    public void setXuatXuNone (String idXuatXu);
+    public boolean checkDanhMuc(String danhMuc);
+    public boolean checkNhomHuong(String nhomHuong);
+    public boolean checkXuatXu(String xuatXu);
+    public boolean checkNhanHieu(String nhanHieu);
+    
+    //Nam code-------------------------------------------------------------------------------
+    public String updateSoLuongTon(SanPhamView spv);
 }

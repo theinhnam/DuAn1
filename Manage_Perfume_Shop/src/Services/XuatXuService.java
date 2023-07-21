@@ -16,4 +16,5 @@ public interface XuatXuService {
     public String insert(XuatXu xx);
     public String update(XuatXu xx);
     public String delete(String id);
+    public void updateTrangThai(String xuatXu);
 }

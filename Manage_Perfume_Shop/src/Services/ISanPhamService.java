@@ -7,6 +7,7 @@ package Services;
 import DomainModels.SanPham;
 import Repositories.SanPhamRepo;
 import ViewModels.SanPhamView;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,23 +41,23 @@ public class ISanPhamService implements SanPhamService {
 
     @Override
     public String addSanPham(SanPhamView sanPhamView) {
-            SanPham sanPham = new SanPham();
-            sanPham.setIdDanhMuc(sanPhamRepo.getIDDanhMuc(sanPhamView.getTenDanhMuc()));
-            sanPham.setIdNhanHieu(sanPhamRepo.getIDNhanHieu(sanPhamView.getTenNhanHieu()));
-            sanPham.setIdNhomHuong(sanPhamRepo.getIDNhomHuong(sanPhamView.getTenNhomHuong()));
-            sanPham.setIdXuatxu(sanPhamRepo.getIDXuatXu(sanPhamView.getTenXuatxu()));
-            sanPham.setChietKhau(sanPhamView.getChietKhau());
-            sanPham.setGiaGiam(sanPhamView.getGiaGiam());
-            sanPham.setGiaGoc(sanPhamView.getGiaGoc());
-            sanPham.setIdSanPham(sanPhamView.getIdSanPham());
-            sanPham.setImageUrl(sanPhamView.getImageUrl());
-            sanPham.setKichThuoc(sanPhamView.getKichThuoc());
-            sanPham.setMoTa(sanPhamView.getMoTa());
-            sanPham.setNgaySua(sanPhamView.getNgaySua());
-            sanPham.setNgayThem(sanPhamView.getNgayThem());
-            sanPham.setSoLuongTon(sanPhamView.getSoLuongTon());
-            sanPham.setTenSanPham(sanPhamView.getTenSanPham());
-            sanPham.setTinhTrang(sanPhamView.getTinhTrang());
+        SanPham sanPham = new SanPham();
+        sanPham.setIdDanhMuc(sanPhamRepo.getIDDanhMuc(sanPhamView.getTenDanhMuc()));
+        sanPham.setIdNhanHieu(sanPhamRepo.getIDNhanHieu(sanPhamView.getTenNhanHieu()));
+        sanPham.setIdNhomHuong(sanPhamRepo.getIDNhomHuong(sanPhamView.getTenNhomHuong()));
+        sanPham.setIdXuatxu(sanPhamRepo.getIDXuatXu(sanPhamView.getTenXuatxu()));
+        sanPham.setChietKhau(sanPhamView.getChietKhau());
+        sanPham.setGiaGiam(sanPhamView.getGiaGiam());
+        sanPham.setGiaGoc(sanPhamView.getGiaGoc());
+        sanPham.setIdSanPham(sanPhamView.getIdSanPham());
+        sanPham.setImageUrl(sanPhamView.getImageUrl());
+        sanPham.setKichThuoc(sanPhamView.getKichThuoc());
+        sanPham.setMoTa(sanPhamView.getMoTa());
+        sanPham.setNgaySua(sanPhamView.getNgaySua());
+        sanPham.setNgayThem(sanPhamView.getNgayThem());
+        sanPham.setSoLuongTon(sanPhamView.getSoLuongTon());
+        sanPham.setTenSanPham(sanPhamView.getTenSanPham());
+        sanPham.setTinhTrang(sanPhamView.getTinhTrang());
         if (sanPhamRepo.addSanPham(sanPham)) {
             return "Thanh cong";
         }
@@ -64,26 +65,25 @@ public class ISanPhamService implements SanPhamService {
 
     }
 
-
     @Override
     public String updateSanPham(SanPhamView sanPhamView) {
         SanPham sanPham = new SanPham();
-            sanPham.setIdDanhMuc(sanPhamRepo.getIDDanhMuc(sanPhamView.getTenDanhMuc()));
-            sanPham.setIdNhanHieu(sanPhamRepo.getIDNhanHieu(sanPhamView.getTenNhanHieu()));
-            sanPham.setIdNhomHuong(sanPhamRepo.getIDNhomHuong(sanPhamView.getTenNhomHuong()));
-            sanPham.setIdXuatxu(sanPhamRepo.getIDXuatXu(sanPhamView.getTenXuatxu()));
-            sanPham.setChietKhau(sanPhamView.getChietKhau());
-            sanPham.setGiaGiam(sanPhamView.getGiaGiam());
-            sanPham.setGiaGoc(sanPhamView.getGiaGoc());
-            sanPham.setIdSanPham(sanPhamView.getIdSanPham());
-            sanPham.setImageUrl(sanPhamView.getImageUrl());
-            sanPham.setKichThuoc(sanPhamView.getKichThuoc());
-            sanPham.setMoTa(sanPhamView.getMoTa());
-            sanPham.setNgaySua(sanPhamView.getNgaySua());
-            sanPham.setNgayThem(sanPhamView.getNgayThem());
-            sanPham.setSoLuongTon(sanPhamView.getSoLuongTon());
-            sanPham.setTenSanPham(sanPhamView.getTenSanPham());
-            sanPham.setTinhTrang(sanPhamView.getTinhTrang());
+        sanPham.setIdDanhMuc(sanPhamRepo.getIDDanhMuc(sanPhamView.getTenDanhMuc()));
+        sanPham.setIdNhanHieu(sanPhamRepo.getIDNhanHieu(sanPhamView.getTenNhanHieu()));
+        sanPham.setIdNhomHuong(sanPhamRepo.getIDNhomHuong(sanPhamView.getTenNhomHuong()));
+        sanPham.setIdXuatxu(sanPhamRepo.getIDXuatXu(sanPhamView.getTenXuatxu()));
+        sanPham.setChietKhau(sanPhamView.getChietKhau());
+        sanPham.setGiaGiam(sanPhamView.getGiaGiam());
+        sanPham.setGiaGoc(sanPhamView.getGiaGoc());
+        sanPham.setIdSanPham(sanPhamView.getIdSanPham());
+        sanPham.setImageUrl(sanPhamView.getImageUrl());
+        sanPham.setKichThuoc(sanPhamView.getKichThuoc());
+        sanPham.setMoTa(sanPhamView.getMoTa());
+        sanPham.setNgaySua(sanPhamView.getNgaySua());
+        sanPham.setNgayThem(sanPhamView.getNgayThem());
+        sanPham.setSoLuongTon(sanPhamView.getSoLuongTon());
+        sanPham.setTenSanPham(sanPhamView.getTenSanPham());
+        sanPham.setTinhTrang(sanPhamView.getTinhTrang());
         if (sanPhamRepo.updateSanPham(sanPham)) {
             return "Thanh cong";
         }
@@ -100,7 +100,7 @@ public class ISanPhamService implements SanPhamService {
 
     @Override
     public ArrayList<SanPhamView> findSanPham(String danhMuc, String nhanHieu, String nhomHuong, String xuatXu) {
-        
+
         ArrayList<SanPhamView> lstSpView = new ArrayList<>();
         ArrayList<SanPham> lstSp = sanPhamRepo.findSanPham(danhMuc, nhanHieu, nhomHuong, xuatXu);
         for (int i = 0; i < lstSp.size(); i++) {
@@ -179,7 +179,7 @@ public class ISanPhamService implements SanPhamService {
     public void setDanhMucNone(String idDanhMuc) {
         sanPhamRepo.setDanhMucNone(idDanhMuc);
     }
-    
+
     @Override
     public void setNhanHieuNone(String idNhanHieu) {
         sanPhamRepo.setNhanHieuNone(idNhanHieu);
@@ -192,7 +192,36 @@ public class ISanPhamService implements SanPhamService {
 
     @Override
     public void setXuatXuNone(String idXuatXu) {
-         sanPhamRepo.setXuatXuNone(idXuatXu);
+        sanPhamRepo.setXuatXuNone(idXuatXu);
+    }
+
+    @Override
+    public String updateSoLuongTon(SanPhamView spv) {
+        if (sanPhamRepo.updateSoLuongTon(new SanPham(null, spv.getTenSanPham(), null, null, 0, null, null, null, BigDecimal.ZERO, BigDecimal.ZERO, spv.getSoLuongTon(), 0, null, 0, null, null, null))) {
+            return "thành công";
+        } else {
+            return "thất bại";
+        }
+    }
+
+    @Override
+    public boolean checkDanhMuc(String danhMuc) {
+        return sanPhamRepo.checkDanhMuc(danhMuc) == true ? true : false;
+    }
+
+    @Override
+    public boolean checkNhomHuong(String nhomHuong) {
+        return sanPhamRepo.checkNhomHuong(nhomHuong) == true ? true : false;
+    }
+
+    @Override
+    public boolean checkXuatXu(String xuatXu) {
+        return sanPhamRepo.checkXuatXu(xuatXu) == true ? true : false;
+    }
+
+    @Override
+    public boolean checkNhanHieu(String nhanHieu) {
+        return sanPhamRepo.checkNhanHieu(nhanHieu) == true ? true : false;
     }
 
 }
