@@ -1365,7 +1365,7 @@ public class NhanVien_SanPhamJFrame extends javax.swing.JFrame {
                 excelBIS = new BufferedInputStream(excelFIS);
                 excelJTableImport = new XSSFWorkbook(excelBIS);
                 XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
+                for (int row = 1; row < excelSheet.getLastRowNum()+1; row++) {
                     XSSFRow excelRow = excelSheet.getRow(row);
                     SanPhamView sanPhamView = new SanPhamView();
                     sanPhamView.setTenSanPham(excelRow.getCell(1).toString());
@@ -1409,7 +1409,6 @@ public class NhanVien_SanPhamJFrame extends javax.swing.JFrame {
                     sanPhamView.setMoTa(excelRow.getCell(7).toString());
                     sanPhamView.setGiaGoc(new BigDecimal(excelRow.getCell(8).toString()));
                     sanPhamView.setSoLuongTon((int) excelRow.getCell(10).getNumericCellValue());
-//                    sanPhamView.setTenKhuyenMai(excelRow.getCell(11).toString());
                     String tinhTrangSTR = excelRow.getCell(14).toString();
                     int tinhTrang;
                     if (tinhTrangSTR.equalsIgnoreCase("Dang ban")) {
@@ -1419,7 +1418,7 @@ public class NhanVien_SanPhamJFrame extends javax.swing.JFrame {
                     }
                     sanPhamView.setTinhTrang(tinhTrang);
                     sanPhamView.setChietKhau((int) excelRow.getCell(15).getNumericCellValue());
-
+                    sanPhamView.setImageUrl(excelRow.getCell(16).toString());
                     sanPhamService.addSanPham(sanPhamView);
 
                 }

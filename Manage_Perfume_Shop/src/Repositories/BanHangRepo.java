@@ -9,11 +9,13 @@ import DomainModels.HoaDon;
 import DomainModels.HoaDonChiTiet;
 import DomainModels.SanPham;
 import Ultilities.DBConnection;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 /**
  *
@@ -549,5 +551,35 @@ public class BanHangRepo {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public Date getNgayThem(String idHoaDon){
+        String sql = "SELECT NgayThem From HoaDon WHERE IdHoadon = ?";
+        Date ngayThem = new Date(0);
+        try(Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setObject(1, idHoaDon);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ngayThem = rs.getDate("NgayThem");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ngayThem;
+    }
+    
+    public BigDecimal getTongTien(String idHoaDon){
+        String sql = "SELECT TongTien from HoaDon WHERE IdHoaDon = ?";
+        BigDecimal tongTien = new BigDecimal(0);
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setObject(1, idHoaDon);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                tongTien = rs.getBigDecimal("TongTien");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tongTien;
     }
 }

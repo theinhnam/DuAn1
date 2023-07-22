@@ -22,15 +22,28 @@ import ViewModels.BanHang_HoaDonView;
 import ViewModels.BanHang_SanPhamView;
 import ViewModels.HoaDonKhuyenMaiView;
 import ViewModels.SanPhamView;
+import com.lowagie.text.Chunk;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -62,7 +75,7 @@ public class NhanVien_DatBanHangJFrame extends javax.swing.JFrame {
     int sanPhamIndex = 0;
     int gioHangIndex = 0;
     int hoaDonIndex = 0;
-
+    String _idHoaDon = "";
     public NhanVien_DatBanHangJFrame() {
         initComponents();
         init();
@@ -939,6 +952,8 @@ public class NhanVien_DatBanHangJFrame extends javax.swing.JFrame {
 
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        lstHoaDon = banHangService.getHoaDon();
+        _idHoaDon = lstHoaDon.get(hoaDonIndex).getIdHoaDon();
         if (lblSTT.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn");
             return;
@@ -978,7 +993,69 @@ public class NhanVien_DatBanHangJFrame extends javax.swing.JFrame {
         modelHoaDonChiTiet.setRowCount(0);
         loadCboKhuyenMai();
         clearDonHang();
-
+        String path = "";
+        JFileChooser j = new JFileChooser("D:\\");
+        int choose = j.showSaveDialog(this);
+        if (choose==JFileChooser.APPROVE_OPTION) {
+            path = j.getSelectedFile().getPath();
+        }
+        Document doc = new Document();
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(path+"HoaDon.pdf"));
+            doc.open();
+            Phrase phrase = new Phrase("Hoa don cua hang nuoc hoa Perfume");
+            Chunk chunk1 = new Chunk("");
+            phrase.add(chunk1);
+            Phrase phrase2 = new Phrase("Nhan vien thanh toan: ");
+            Phrase phrase4 = new Phrase("Ngay thanh toan: " + banHangService.getNgayThem(_idHoaDon));
+            phrase4.add(chunk1);
+            Paragraph paragraph4 = new Paragraph();
+            paragraph4.setAlignment(Element.ALIGN_LEFT);
+            paragraph4.setIndentationLeft(50);
+            paragraph4.setSpacingAfter(15);
+            paragraph4.add(phrase4);
+            phrase2.add(chunk1);
+            Paragraph paragraph1 = new Paragraph();
+            Paragraph paragraph2 = new Paragraph();
+            paragraph1.setIndentationLeft(80);
+            paragraph1.setIndentationRight(80);
+            paragraph1.setAlignment(Element.ALIGN_CENTER);
+            paragraph1.setSpacingAfter(15);
+            paragraph1.add(phrase);
+            paragraph2.setAlignment(Element.ALIGN_LEFT);
+            paragraph2.setSpacingAfter(15);
+            paragraph2.setIndentationLeft(50);
+            paragraph2.add(phrase2);
+            doc.add(paragraph1);
+            doc.add(paragraph2);
+            doc.add(paragraph4);
+            PdfPTable tbl = new PdfPTable(3);
+            tbl.addCell("Ten san pham");
+            tbl.addCell("So luong");
+            tbl.addCell("Don gia");
+            for (int i = 0; i < lstHoaDonChiTietView.size(); i++) {
+                String tenSP = lstHoaDonChiTietView.get(i).getTenSp();
+                String soLuong = String.valueOf(lstHoaDonChiTietView.get(i).getSoLuong());
+                String donGia = String.valueOf(lstHoaDonChiTietView.get(i).getDonGia());
+                tbl.addCell(tenSP);
+                tbl.addCell(soLuong);
+                tbl.addCell(donGia);
+            }
+            doc.add(tbl);
+            Phrase phrase3 = new Phrase("Tong tien: " + banHangService.getTongTien(_idHoaDon));
+            phrase3.add(chunk1);
+            Paragraph paragraph3 = new Paragraph();
+            paragraph3.setAlignment(Element.ALIGN_LEFT);
+            paragraph3.setSpacingAfter(15);
+            paragraph3.setIndentationLeft(50);
+            paragraph3.add(phrase3);
+            doc.add(paragraph3);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(NhanVien_DatBanHangJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(NhanVien_DatBanHangJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        doc.close();
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
 

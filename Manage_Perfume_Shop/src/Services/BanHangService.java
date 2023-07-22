@@ -9,8 +9,10 @@ import ViewModels.BanHang_HoaDonChiTietView;
 import ViewModels.BanHang_HoaDonView;
 import ViewModels.BanHang_SanPhamView;
 import ViewModels.SanPhamView;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 /**
  *
@@ -36,7 +38,8 @@ public interface BanHangService {
     public List<BanHang_HoaDonView> getHoaDon ();
     public int getSoLuongTon (String idSanPham);
     public String updateHoaDonChiTiet(int soLuong, String idHoaDon, String idSanPham);
-    
+    Date getNgayThem(String idHoaDon);
+    BigDecimal getTongTien(String idHoaDon);
     //nam code---------------------------------------------------------------------------------------------
     public String update(BanHang_HoaDonView bhhd);
 }

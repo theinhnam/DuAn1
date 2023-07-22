@@ -15,6 +15,7 @@ import ViewModels.BanHang_SanPhamView;
 import ViewModels.SanPhamView;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -210,6 +211,16 @@ public class IBanHangService implements BanHangService {
             return "Thanh Cong";
         }
         return"That Bai";
+    }
+
+    @Override
+    public Date getNgayThem(String idHoaDon) {
+        return banHangRepo.getNgayThem(idHoaDon);
+    }
+
+    @Override
+    public BigDecimal getTongTien(String idHoaDon) {
+        return banHangRepo.getTongTien(idHoaDon);
     }
 
 }
