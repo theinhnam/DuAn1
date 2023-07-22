@@ -17,5 +17,6 @@ public interface KhuyenMaiService {
     public String insert(KhuyenMai km);
     public String update(KhuyenMai km);
     public String updateSoLanApDung(KhuyenMai km);
-    public String delete(String idKhuyenMai);
+    public boolean updateTrangThai(KhuyenMai km);
+    public String delete(String id);
 }

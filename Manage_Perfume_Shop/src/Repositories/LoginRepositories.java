@@ -49,7 +49,7 @@ public class LoginRepositories {
     }
     
     public String getIDByEmail(String email){
-        String sql = "SELECT IDTaiKhoan FROM TaiKhoan WHERE Email = ?";
+        String sql = "SELECT IDTaiKhoan FROM TaiKhoan WHERE Email = ? and TrangThai = 1";
         String idTaiKhoan = "";
         try (Connection conn = DBConnection.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setObject(1, email);

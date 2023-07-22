@@ -25,8 +25,9 @@ public class QuanLy_KhuyenMaiJFrame extends javax.swing.JFrame {
     public QuanLy_KhuyenMaiJFrame() {
         initComponents();
         init();
-
-        loadData();
+        
+        loadData();  
+        loadTrangThai();
     }
 
     /**
@@ -141,6 +142,7 @@ public class QuanLy_KhuyenMaiJFrame extends javax.swing.JFrame {
 
         cboTinhTrang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cboTinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngừng hoạt động", "Còn hoạt động" }));
+        cboTinhTrang.setEnabled(false);
 
         txtSoLanApDung.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -463,7 +465,7 @@ public class QuanLy_KhuyenMaiJFrame extends javax.swing.JFrame {
             return;
         }
         int tinhTrang;
-        if(cboTinhTrang.getSelectedItem().toString().equals("Ngừng hoạt động")){
+        if(Integer.parseInt(txtSoLanApDung.getText())==0){
             tinhTrang=0;
         }else{
             tinhTrang=1;
@@ -508,7 +510,7 @@ public class QuanLy_KhuyenMaiJFrame extends javax.swing.JFrame {
             return;
         }
         int tinhTrang;
-        if(cboTinhTrang.getSelectedItem().toString().equals("Ngừng hoạt động")){
+        if(Integer.parseInt(txtSoLanApDung.getText())==0){
             tinhTrang=0;
         }else{
             tinhTrang=1;
@@ -528,8 +530,8 @@ public class QuanLy_KhuyenMaiJFrame extends javax.swing.JFrame {
         if(hoi==JOptionPane.NO_OPTION || hoi==JOptionPane.CANCEL_OPTION || hoi==JOptionPane.CLOSED_OPTION){
             return;
         }
-        String idKhuyenMai=lblId.getText();
-        JOptionPane.showMessageDialog(this, khuyenMaiService.delete(idKhuyenMai));
+        String id=lblId.getText();
+        JOptionPane.showMessageDialog(this, khuyenMaiService.delete(id));
         loadData();
     }//GEN-LAST:event_btnXoaActionPerformed
 
@@ -691,5 +693,17 @@ public class QuanLy_KhuyenMaiJFrame extends javax.swing.JFrame {
         if(tinhTrang==0){
             return "Ngừng hoạt động";
         }return "Còn hoạt động";
+    }
+
+    private void loadTrangThai() {
+        ArrayList<KhuyenMai> lstKM=khuyenMaiService.getList();
+        for(int i=0;i<tblKhuyenMai.getRowCount();i++){
+            int soLan=Integer.parseInt(tblKhuyenMai.getValueAt(i, 2).toString());
+            if(soLan==0){
+                int tinhTrang=0;
+                KhuyenMai km=new KhuyenMai(lstKM.get(i).getIdKhuyenMai(), null, null, null, soLan, WIDTH, tinhTrang);
+                khuyenMaiService.updateTrangThai(km);
+            }
+        }
     }
 }

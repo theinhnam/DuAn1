@@ -40,8 +40,8 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService{
     }
 
     @Override
-    public String delete(String idKhuyenMai) {
-        if(khuyenMaiRepositoey.delete(idKhuyenMai)){
+    public String delete(String id) {
+        if(khuyenMaiRepositoey.delete(id)){
             return "Xóa thành công";
         }else{
             return "Xóa thất bại";
@@ -60,6 +60,13 @@ public class KhuyenMaiServiceImpl implements KhuyenMaiService{
          }else{
              return "Sửa thất bại";
          }
+    }
+
+    @Override
+    public boolean updateTrangThai(KhuyenMai km) {
+        if(khuyenMaiRepositoey.updateTrangThai(km)){
+            return true;
+        }return false;
     }
     
 }

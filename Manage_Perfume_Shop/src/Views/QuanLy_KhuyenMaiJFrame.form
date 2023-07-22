@@ -263,6 +263,7 @@
                     <StringItem index="1" value="C&#xf2;n ho&#x1ea1;t &#x111;&#x1ed9;ng"/>
                   </StringArray>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

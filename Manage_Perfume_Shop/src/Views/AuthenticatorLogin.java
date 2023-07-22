@@ -24,13 +24,14 @@ import javax.swing.JOptionPane;
  *
  * @author theinhnam
  */
-public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, ThreadFactory{
+public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
     private WebcamPanel panel = null;
     private Webcam webcam = null;
-    
+
     private static final long serialVersionUID = 6441489157408381878L;
     private Executor executor = Executors.newSingleThreadExecutor(this);
+
     public AuthenticatorLogin() {
         initComponents();
         setLocationRelativeTo(null);
@@ -59,7 +60,7 @@ public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, 
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(230, 230, 230)));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 480, 300));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 480, 350));
 
         txtResult.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtResult.setForeground(new java.awt.Color(0, 255, 0));
@@ -87,7 +88,6 @@ public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, 
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -105,7 +105,7 @@ public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, 
             java.util.logging.Logger.getLogger(AuthenticatorLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -119,21 +119,21 @@ public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, 
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel txtResult;
     // End of variables declaration//GEN-END:variables
-    
-    private void initWebcam(){
+
+    private void initWebcam() {
         Dimension size = WebcamResolution.QVGA.getSize();
         webcam = Webcam.getWebcams().get(0);
         webcam.setViewSize(size);
         panel = new WebcamPanel(webcam);
         panel.setPreferredSize(size);
         panel.setFPSDisplayed(true);
-        jPanel2.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 300));
+        jPanel2.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 350));
         executor.execute(this);
     }
-    
+
     @Override
     public void run() {
-        do {            
+        do {
             try {
                 Thread.sleep(100);
             } catch (Exception e) {
@@ -151,13 +151,15 @@ public class AuthenticatorLogin extends javax.swing.JFrame implements Runnable, 
             try {
                 result = new MultiFormatReader().decode(bitmap);
             } catch (Exception e) {
-                
+
             }
             if (result != null) {
-                if (result.equals(new LoginJFrame()._idAccountLogin)) {
-                    JOptionPane.showMessageDialog(this, "Xác thực thành công");
-                    
-                }else{
+                System.out.println(LoginJFrame._idAccountLogin);
+                System.out.println(result);
+                if (result.getText().equalsIgnoreCase(LoginJFrame._idAccountLogin)) {
+                    this.setVisible(false);
+                    new NhanVien_DatBanHangJFrame().setVisible(true);
+                } else {
                     JOptionPane.showMessageDialog(this, "Xác thực thất bại");
                     new LoginJFrame().setVisible(true);
                     this.setVisible(false);

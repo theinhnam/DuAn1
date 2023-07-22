@@ -101,12 +101,9 @@ public class LoginJFrame extends javax.swing.JFrame {
             return;
         }
         if (listAccount.get(0).getIdLoaiNguoiDung().equals(loginService.getIDLoaiNguoiDung())) {
-            JOptionPane.showMessageDialog(this, "Đây là view của quản lý");
-//            new AuthenticatorLogin().setVisible(true);
+            new AuthenticatorLogin().setVisible(true);
             this.setVisible(false);
-            new NhanVien_KhoHangJFrame().setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Đây là view của nhân viên");
             new AuthenticatorLogin().setVisible(true);
             this.setVisible(false);
         }
