@@ -855,7 +855,7 @@ public class NhanVien_DatBanHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDatBanHangActionPerformed
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
-        JOptionPane.showMessageDialog(this, banHangService.taoHoaDon("CB74CEA8-EBB8-4A32-8D3E-226F71D5DFDC"));
+        JOptionPane.showMessageDialog(this, banHangService.taoHoaDon(LoginJFrame._idAccountLogin));
         lstHoaDon = banHangService.getHoaDon();
         fillToTableHoaDon(lstHoaDon);
 

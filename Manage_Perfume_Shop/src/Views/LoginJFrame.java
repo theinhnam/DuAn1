@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 public class LoginJFrame extends javax.swing.JFrame {
 
     LoginService loginService = new LoginServiceImpl();
-    public String _idAccountLogin = "";
-
+    public static String _idAccountLogin = "";
+    public static String _emailAccountLogin = "";
     public LoginJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -102,14 +102,16 @@ public class LoginJFrame extends javax.swing.JFrame {
         }
         if (listAccount.get(0).getIdLoaiNguoiDung().equals(loginService.getIDLoaiNguoiDung())) {
             JOptionPane.showMessageDialog(this, "Đây là view của quản lý");
-            new AuthenticatorLogin().setVisible(true);
+//            new AuthenticatorLogin().setVisible(true);
             this.setVisible(false);
+            new NhanVien_KhoHangJFrame().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Đây là view của nhân viên");
             new AuthenticatorLogin().setVisible(true);
             this.setVisible(false);
         }
         _idAccountLogin = loginService.getIDByEmail(txtTenDangNhap1.getText());
+        _emailAccountLogin = txtTenDangNhap1.getText();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed

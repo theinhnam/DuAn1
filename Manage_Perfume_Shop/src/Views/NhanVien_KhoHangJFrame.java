@@ -408,7 +408,7 @@ public class NhanVien_KhoHangJFrame extends javax.swing.JFrame {
             nhapSanPhamView.setTenSanPham(lstSanPhamView.get(index).getTenSanPham());
             nhapSanPhamView.setTrangThai(1);
             nhapSanPhamView.setNgayThem(null);
-            nhapSanPhamView.setemail("namquanly@gmail.com");
+            nhapSanPhamView.setemail(LoginJFrame._emailAccountLogin);
             JOptionPane.showMessageDialog(this, khoHangService.nhap(nhapSanPhamView));
             lstSanPhamView = khoHangService.getSp();
             fillToTable(lstSanPhamView);
@@ -418,11 +418,11 @@ public class NhanVien_KhoHangJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNhapActionPerformed
 
     private void btnXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatActionPerformed
-        if (checkRongTxt(txtSoLuong)==false || checkRongTxt(txtDonGia)==false) {
+        if (checkRongTxt(txtSoLuong)==false) {
             JOptionPane.showMessageDialog(this, "Khong duoc de trong");
-        }else if (checkPhaiLaSo(txtSoLuong)==false || checkPhaiLaSo(txtDonGia)==false) {
+        }else if (checkPhaiLaSo(txtSoLuong)==false) {
             JOptionPane.showMessageDialog(this, "So luong phai la so");
-        }else if (checkPhaiDuong(txtSoLuong)==false || checkPhaiDuong(txtDonGia)==false) {
+        }else if (checkPhaiDuong(txtSoLuong)==false) {
             JOptionPane.showMessageDialog(this, "So luong va gia> 0");
         }else if (checkLhongXuatAmSoLuong(txtSoLuong)==false) {
             JOptionPane.showMessageDialog(this, "Khong the xuat am san pham");
@@ -433,7 +433,7 @@ public class NhanVien_KhoHangJFrame extends javax.swing.JFrame {
             nhapSanPhamView.setTenSanPham(lstSanPhamView.get(index).getTenSanPham());
             nhapSanPhamView.setTrangThai(0);
             nhapSanPhamView.setNgayThem(null);
-            nhapSanPhamView.setemail("namquanly@gmail.com");
+            nhapSanPhamView.setemail(LoginJFrame._emailAccountLogin);
             JOptionPane.showMessageDialog(this, khoHangService.xuat(nhapSanPhamView));
             lstSanPhamView = khoHangService.getSp();
             fillToTable(lstSanPhamView);
